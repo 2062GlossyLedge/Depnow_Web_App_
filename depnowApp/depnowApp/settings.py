@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import environ
+import os
 env = environ.Env()
 environ.Env.read_env()
 
@@ -40,7 +41,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'depnowAppMVC.apps.DepnowappmvcConfig',
+    'depnowAppMVC',
+    'bootstrap5',
+    
+
 ]
 
 MIDDLEWARE = [
@@ -58,8 +62,9 @@ ROOT_URLCONF = 'depnowApp.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
         'APP_DIRS': True,
+        'DIRS': [os.path.join('/Users/Ayden Smith/Downloads/depnow/depnowApp/depnowAppMVC', 'templates')],
+
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
