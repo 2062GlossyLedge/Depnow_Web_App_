@@ -6,3 +6,12 @@ def base(request):
 
 def profile(request):
     return render(request, 'profile.html')
+
+def data_insights(request):
+    return render(request, 'data_insights.html')
+
+def tracker(request):
+    return render(request, 'tracker.html')
+
+def todo_list(request):
+    return render(request, 'todo_list.html')
