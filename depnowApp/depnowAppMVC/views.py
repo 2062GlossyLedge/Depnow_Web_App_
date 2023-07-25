@@ -15,3 +15,16 @@ def tracker(request):
 
 def todo_list(request):
     return render(request, 'todo_list.html')
+
+def slideshow_view(request):
+    # Replace this with your actual slide data
+    slides = [
+        {
+            'logo': 'depnowApp\depnowAppMVC\static\depnowAppMVC\images\MAC_carina_Nebula.jpg',
+            'row1': {'image': 'depnowApp/depnowAppMVC/static/depnowAppMVC/images/GitHub-logo.jpg', 'text': 'Row 1 Text'},
+            'row2': {'image': 'depnowApp/depnowAppMVC/static/depnowAppMVC/images/GitHub-logo.jpg', 'text': 'Row 2 Text'},
+            'row3': {'image': 'depnowApp/depnowAppMVC/static/depnowAppMVC/images/GitHub-logo.jpg', 'text': 'Row 3 Text'},
+        },
+        # Add more slide data here
+    ]
+    return render(request, 'slideshow.html', {'slides': slides})

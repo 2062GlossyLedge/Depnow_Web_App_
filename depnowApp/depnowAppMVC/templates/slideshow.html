@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+<!-- slideshow.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tutorial Slideshow</title>
+    <link rel="stylesheet" href="{% static 'css/slideshow.css' %}">
+</head>
+<body>
+    <div class="slideshow-container">
+        {% for slide in slides %}
+        <div class="slide fade">
+            <img src="{{ slide.logo }}" alt="Company Logo">
+            <div class="row">
+                <img src="{{ slide.row1.image }}" alt="Row 1 Image">
+                <p>{{ slide.row1.text }}</p>
+            </div>
+            <div class="row">
+                <img src="{{ slide.row2.image }}" alt="Row 2 Image">
+                <p>{{ slide.row2.text }}</p>
+            </div>
+            <div class="row">
+                <img src="{{ slide.row3.image }}" alt="Row 3 Image">
+                <p>{{ slide.row3.text }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'js/slideshow.js' %}"></script>
+</body>
+</html>

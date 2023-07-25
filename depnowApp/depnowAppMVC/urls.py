@@ -7,4 +7,5 @@ path('', views.base, name='base'),
     path('data_insights/', views.data_insights, name='data_insights'),
     path('tracker/', views.tracker, name='tracker'),
     path('todo_list/', views.todo_list, name='todo_list'),
+    path('slideshow/', views.slideshow_view, name='slideshow'),
 ]

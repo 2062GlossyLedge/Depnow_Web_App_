@@ -1,0 +1,49 @@
+/* slideshow.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+.slideshow-container {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.slide {
+    display: none;
+}
+
+img {
+    width: 100%;
+    height: auto;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+}
+
+p {
+    margin-left: 10px;
+}
+
+/* Progress Indicator */
+.progress-container {
+    display: flex;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.progress-dot {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.progress-dot.active {
+    background-color: #717171;
+}
