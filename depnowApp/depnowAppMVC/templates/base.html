@@ -20,9 +20,10 @@
 </html> -->
 
 <!-- Nav Bar -->
+<body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="#">My Website</a>
+      <a class="navbar-brand" href="#">PSA/Depnow</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -41,8 +42,23 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'todo_list' %}">To-Do List</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'slideshow' %}">Tutorial</a>
+          </li>
         </ul>
       </div>
     </div>
   </nav>
+
+  <!-- <main role="main" class="container">
+    <div class="pb-2 mb-2 border-bottom">
+      {% block page_header %}{% endblock page_header %}
+    </div> -->
+    <div>
+      {% block content %}{% endblock content %}
+    </div>
+  <!-- </main> -->
   
+</body>
+
+</html>
