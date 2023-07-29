@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <!--registartion form-->
+  <form method="post" action="{% url 'users:register' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    
+    <!--Send user to homepage if registered -->
+    <button name="submit">Register</button>
+    <input type="hidden" name="next" value="{% url 'profile' %}" />
+  </form>
+    
+{% endblock content %}

@@ -68,7 +68,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'APP_DIRS': True,
-        'DIRS': [os.path.join('/Users/Ayden Smith/Downloads/depnow/depnowApp/depnowAppMVC', 'templates')],
+        'DIRS': [os.path.join('/Users/Ayden Smith/OneDrive/Documents/Personal_Projects/depnow2/Depnow_Web_App_/depnowApp/depnowAppMVC', 'templates')],
 
         'OPTIONS': {
             'context_processors': [
