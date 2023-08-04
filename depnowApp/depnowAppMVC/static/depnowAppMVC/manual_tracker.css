@@ -1,0 +1,79 @@
+body {
+    /* font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0; */
+}
+
+.manual-tracker-container {
+    box-sizing: border-box;
+    /* width: 600px;
+    max-width: 100%; */
+    margin: 50px;
+    padding: 20px;
+    /* border: 3px solid steelblue; */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+}
+
+#timer {
+    text-align: center;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="number"],
+input[type="date"],
+input[type="time"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* ... (the previous styles remain the same) */
+
+.rating {
+    display: inline-block;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    color: #ddd;
+    font-size: 24px;
+}
+
+.rating label:before {
+    content: '\2605'; /* Unicode star symbol */
+}
+
+.rating input:checked ~ label {
+    color: #ffdf00; /* Yellow color for selected stars */
+}
+
+#reflection {
+    width: 100%;
+}

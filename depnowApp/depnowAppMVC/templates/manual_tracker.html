@@ -1,0 +1,61 @@
+{%extends "tracker.html"%}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    <!DOCTYPE html>
+<html>
+<head>
+    <title>Focus Session Input</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    {% block Tracker_content %}
+    <div class="manual-tracker-container">
+        <h1>Add Focus Session</h1>
+        <form id="focusForm">
+            <li for="hours">Hours:</li>
+            <input type="number" id="hours" name="hours" min="0">
+            <li for="minutes">Minutes:</li>
+            <input type="number" id="minutes" name="minutes" min="0" max="59">
+            <br>
+            <li for="date">Date:</li>
+            <input type="date" id="date" name="date">
+            <li for="time">Time:</li>
+            <input type="time" id="time" name="time">
+            <br>
+            <label for="rating">Productivity Rating:</label>
+            <div class="rating">
+                <input type="radio" id="star5" name="rating" value="5"><label for="star5">5</label>
+                <input type="radio" id="star4" name="rating" value="4"><label for="star4">4</label>
+                <input type="radio" id="star3" name="rating" value="3"><label for="star3">3</label>
+                <input type="radio" id="star2" name="rating" value="2"><label for="star2">2</label>
+                <input type="radio" id="star1" name="rating" value="1"><label for="star1">1</label>
+            </div>
+            <br>
+            <label for="reflection">Reflection:</label>
+            <textarea id="reflection" name="reflection" rows="4" cols="50"></textarea>
+            <br>
+            <button type="button" onclick="submitFocusSession()">Submit</button>
+           
+            
+        </form>
+    </div>    
+    {%block endFocusSessionButton%}{%endblock endFocusSessionButton%}
+    {%load static%}
+
+    <script src="{% static 'depnowAppMVC/manual_tracker.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'depnowAppMVC/manual_tracker.css' %}">
+    {% endblock Tracker_content %}
+</body>
+</html>
+
+</body>
+</html></html>

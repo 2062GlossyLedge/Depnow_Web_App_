@@ -1,12 +1,56 @@
 {% extends "base.html" %}
 <html>
+
 <head>
     <title>Focus Hour Tracker</title>
 </head>
+
 <body>
 
-    <!-- Add your page content here -->
-    <a href="{% url 'home' %}">Home</a>
-    <!-- Add more navigation links as needed -->
+
+    {% block content %}
+    <div id="timer">
+        <h1>Focus Tracker </h1>
+        <select name="tracker_type" onchange="location = this.value;">
+            <option value="" selected disabled>Options</option>
+            <option value="{% url 'stopwatch' %}" data-url="{% url 'stopwatch' %}">Stopwatch</option>
+            <option value="{% url 'countdown_timer'%}" data-url="{% url 'countdown_timer'}">Countdown Timer</option>
+            <option value="{% url 'manual_tracker'%}" data-url="{% url 'manual_tracker'}">Manually add Focus Session
+            </option>
+
+        </select>
+
+        <div>
+            {% block Tracker_content %}{% endblock Tracker_content %}
+        </div>
+
+        <br>
+        {%block endFocusSessionButton%}
+        <div>
+            <button id="button1" type="button" onclick="showPopup()">End Focus Session</button>
+
+            <!-- The modal popup -->
+            <div class="modal" id="modal">
+                <div class="modal-content">
+                    <span class="close" onclick="hidePopup()">&times;</span>
+
+                    <p>Are you sure you want to end the focus session?</p>
+                    <button onclick="endFocusSession()">Yes, End Session</button>
+                </div>
+            </div>
+
+        </div>
+        {%endblock endFocusSessionButton%}
+    </div>
+    {%load static%}
+    <script src="{% static 'depnowAppMVC/tracker.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'depnowAppMVC/tracker.css' %}">
+
+
+    {%endblock content%}
+
+
+
 </body>
+
 </html>
