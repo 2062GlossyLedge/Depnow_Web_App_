@@ -1,12 +1,21 @@
 
 #timer {
-    margin: auto;
+    margin-left: 200px;
+    margin-top: 5%;
     width: 50%;
     border: 3px solid steelblue;
     padding: 70px;
     text-align: center;
+    
 }
 
+.tracker_type {
+    margin-bottom: 15%;
+}
+
+div {
+    border-radius: 20px;
+}
 
 
 /* ... (the previous styles remain the same) */
@@ -43,5 +52,83 @@
 }
 
 #button1 {
-    margin: 50px;
+    margin-top: 5%;
+}
+
+.rating {
+    display: inline-block;
+}
+
+.rating input {
+    display: none;
+}
+
+.rating label {
+    color: #ddd;
+    font-size: 24px;
+}
+
+.rating label:before {
+    content: '\2605'; /* Unicode star symbol */
+}
+
+.rating input:checked ~ label {
+    color: #ffdf00; /* Yellow color for selected stars */
+}
+
+/* For todo box  */
+/* body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+} */
+
+/* #todo-timer {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+} */
+
+#todo-box {
+    margin-top:5%;
+   margin-left: 200px;
+    width: 50%;
+    border: 3px solid steelblue;
+    padding: 70px;
+    text-align: center;
+}
+
+input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+input[type="checkbox"] + label {
+    cursor: pointer;
+}
+
+input[type="checkbox"] + label:before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-right: 5px;
+}
+
+input[type="checkbox"]:checked + label:before {
+    background-color: #007bff;
+}
+
+.todo-text {
+    flex: 1;
+}
+
+.todo-text p {
+    margin: 5px 0;
+}
+
+.tracer-widgets {
+    margin-left: auto;
 }
