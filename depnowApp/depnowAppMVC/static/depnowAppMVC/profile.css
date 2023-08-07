@@ -1,0 +1,146 @@
+body {
+    background: steelblue
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: steelblue
+}
+
+.profile-button {
+    background: steelblue;
+    box-shadow: none;
+    border: none
+}
+
+.profile-button:hover {
+    background: steelblue
+}
+
+.profile-button:focus {
+    background: steelblue;
+    box-shadow: none
+}
+
+.profile-button:active {
+    background: steelblue;
+    box-shadow: none
+}
+
+.back:hover {
+    color: steelblue;
+    cursor: pointer
+}
+
+.labels {
+    font-size: 11px
+}
+
+.add-experience:hover {
+    background: steelblue;
+    color: #fff;
+    cursor: pointer;
+    border: solid 1px steelblue
+}
+
+
+.vertical-layout {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
+
+
+
+.delete-account,
+.upload-avatar,
+.dark-mode {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: steelblue;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    margin-bottom: 10px;
+    width: 100%;
+
+}
+
+
+
+.delete-account:hover,
+.upload-avatar:hover,
+.dark-mode:hover {
+    background-color: #0056b3;
+}
+
+.p-3-py-5 {
+    margin-top: 60%;
+}
+
+
+
+.badge-box {
+    max-width: 600px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.badge-container {
+    position: relative;
+    overflow-x: scroll;
+}
+
+.badges {
+    display: flex;
+    align-items: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+.badge {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: darkorange;
+    margin: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.badge img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 50%;
+}
+
+.arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 30px;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    padding: 5px 10px;
+    border-radius: 50%;
+    color: #007bff;
+}
+
+.left-arrow {
+    left: 0;
+}
+
+.right-arrow {
+    right: 0;
+}

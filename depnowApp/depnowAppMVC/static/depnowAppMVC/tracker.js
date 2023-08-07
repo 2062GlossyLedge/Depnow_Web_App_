@@ -112,20 +112,3 @@ function endFocusSession() {
 
 // }
 
-// Rest of your countdown timer functions...
-
-// function updateCountdownDisplay() {
-//   const countdownDisplay = document.getElementById('countdown-time');
-//   countdownDisplay.textContent = formatTime(countdownTime);
-
-//   const circle = document.getElementById('countdown-svg');
-//   const progress = document.querySelector('.countdown-circle-progress');
-
-//   // Calculate the percentage of the countdown time remaining
-//   const percentageRemaining = (countdownTime / initialCountdownTime) * 100;
-
-//   // Update the circle's stroke-dashoffset to display the countdown progress
-//   const circleLength = 2 * Math.PI * 45;
-//   const offset = circleLength - (circleLength * percentageRemaining) / 100;
-//   progress.style.strokeDashoffset = offset;
-//}
