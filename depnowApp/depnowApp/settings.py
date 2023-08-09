@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'depnowAppMVC',
     'bootstrap5',
+    'rest_framework',
     
 
 ]
