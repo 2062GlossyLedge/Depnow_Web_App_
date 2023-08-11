@@ -4,6 +4,9 @@ from django.shortcuts import render
 def base(request):
     return render(request, 'base.html')
 
+def slideshow(request):
+    return render(request, 'slideshow.html')
+
 def profile(request):
     return render(request, 'profile.html')
 
