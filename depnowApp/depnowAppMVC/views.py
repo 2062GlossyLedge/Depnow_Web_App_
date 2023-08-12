@@ -38,3 +38,6 @@ def countdown_timer(request):
 
 def manual_tracker(request):
     return render(request, 'manual_tracker.html')
+
+def projects_and_tasks(request):
+    return render(request, 'projects_and_tasks.html')

@@ -12,7 +12,7 @@ urlpatterns = [
     path('stopwatch/', views.stopwatch, name='stopwatch'),
     path('manual_tracker/', views.manual_tracker, name='manual_tracker'),
     path('countdown_timer/', views.countdown_timer, name='countdown_timer'),
-
+    path('projects_and_tasks', views.projects_and_tasks, name='projects_and_tasks'),
 
 
 ]
