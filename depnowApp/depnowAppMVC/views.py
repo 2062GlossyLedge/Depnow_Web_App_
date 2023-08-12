@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 # Create your views here.
 def base(request):
-    return render(request, 'base.html')
+    return render(request, 'slideshow.html')
 
 def slideshow(request):
     return render(request, 'slideshow.html')
