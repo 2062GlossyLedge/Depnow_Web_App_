@@ -1,0 +1,41 @@
+{%extends "tracker.html"%}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+</head>
+<body>
+    {%block Tracker_content%}
+    <div class="countdown" sty>
+        <h2>Countdown Timer</h2>
+
+        <p id="countdown-display">00:00:00</p>
+        <!-- <input type="time" id="countdown-input" step="1"> -->
+        <h3>Choose a Time:</h3>
+        <form action="{% url 'submit_selection' %}" method="post">
+            {% csrf_token %}
+            <select name="selected_time" id="time-dropdown">
+                {%for option in options%}
+                <option value="{{ option }}">{{ option }} minutes</option>
+                <!-- <input type="time" id="countdown-input" value="option"> -->
+                {%endfor%}
+            </select>
+        </form>
+        <button onclick="startCountdown()">Start</button>
+        <button onclick="stopCountdown()">Stop</button>
+        <button onclick="resetCountdown()">Reset</button>
+    </div>
+    {%endblock Tracker_content%}
+
+    {%block endFocusSessionButton%}
+        {{block.super}}
+    {%endblock endFocusSessionButton%}
+</body>
+</html>
+
+</html>
