@@ -1,6 +1,7 @@
 from django.db import models
 
 
+
 class User(models.Model):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=50)
@@ -78,3 +79,4 @@ class Reflection(models.Model):
     productivity_rating = models.IntegerField()  # Rating for the user's productivity
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # Other fields as needed
+

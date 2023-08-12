@@ -1,12 +1,96 @@
-{% extends "base.html" %}
+
+{%extends "base.html"%}
+
+{%block content%}
+<!doctype html>
 <html>
 <head>
-    <title>Data Insights</title>
+  <meta charset="utf-8">
+  <title>ZingSoft Demo</title>
+  <script src="https://cdn.zingchart.com/zingchart.min.js"></script>
 </head>
-<body>
 
-    <!-- Add your page content here -->
-    <a href="{% url 'home' %}">Home</a>
-    <!-- Add more navigation links as needed -->
+<body class="zc-body">
+
+  <div class="dashboard">
+
+    <!-- Nav -->
+    <nav class="dashboard-nav">
+      <h1 style="color:white">Dashboard</h1>
+    </nav>
+
+    <!-- Dashboard -->
+    <div class="dashboard-body">
+
+      <!-- Panel -->
+      <div class="dashboard-panel layout-2of3 panel-times">
+
+        <!-- Delivery Times -->
+        <div class="dashboard-times">
+          <strong class="dashboard-intro">Time Focused</strong>
+
+          <div>
+            <strong>In total</strong>
+            <span>67.5 hrs</span>
+          </div>
+
+          <div>
+            <strong>This week</strong>
+            <span>10 hrs</span>
+          </div>
+
+          <div>
+            <strong>This month</strong>
+            <span>34.4 hrs</span>
+          </div>
+
+          <div>
+            <strong>Today</strong>
+            <span>4.3 hrs</span>
+          </div>
+
+        </div>
+
+        <!-- Chart 1 -->
+        <div id="chart1">
+          <a href="https://www.zingchart.com/" rel="noopener" class="zc-ref">Powered by ZingChart</a>
+        </div>
+
+      </div>
+
+
+      <!-- Panel -->
+      <div class="dashboard-panel layout-1of3 nopad">
+        <!-- <div id="myChart" class="chart--container"> -->
+        <div id="chart2">
+          <a href="https://www.zingchart.com/" rel="noopener" class="zc-ref">Powered by ZingChart</a>
+        </div>
+      </div>
+
+
+      <!-- Panel -->
+      <div class="dashboard-panel nopad">
+        <div id="chart3">
+          <a href="https://www.zingchart.com/" rel="noopener" class="zc-ref">Powered by ZingChart</a>
+        </div>
+      </div>
+
+      <div class="dashboard-panel nopad">
+        <div id="Insights-and-summary">
+          <h1 style="color:white; margin: 15px">Insights and Summary</h1>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  {%load static%}
+  <script src="{%static 'depnowAppMVC/dashboard.js'%}"></script>
+  <link href="{%static 'depnowAppMVC/dashboard.css'%}" rel="stylesheet">
+
+ 
 </body>
 </html>
+
+{%endblock content%}

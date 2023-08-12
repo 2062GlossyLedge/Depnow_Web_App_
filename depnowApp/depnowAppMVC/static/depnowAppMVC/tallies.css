@@ -1,0 +1,87 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+.tally-box {
+    display: flex;
+}
+
+.tally {
+    width: 20px;
+    height: 120px;
+    margin: 5px;
+    border: 1px solid #000;
+    cursor: pointer;
+}
+
+.tally.active {
+    border-top: 4px solid #007bff;
+}
+
+.milestone-box {
+    display: none;
+    margin-top: 20px;
+}
+
+.milestone-box input[type="text"] {
+    padding: 5px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+}
+
+.milestone-box button {
+    margin-top: 10px;
+    padding: 8px 16px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.milestone-box button:hover {
+    background-color: #0056b3;
+}
+
+/* ... (the previous CSS styles remain the same) */
+
+.time-label {
+    display: block;
+    text-align: center;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.milestone-label {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+#milestoneBox {
+    display: none;
+}
+
+.tally.active {
+    background-color: #007bff;
+    border: none;
+}
+
+.tally.completed {
+    background-color: #007bff;
+}
+
+.tally.active .bar {
+    display: block;
+}
+
+.tally .bar {
+    height: 5px;
+    width: 100%;
+    background-color: #007bff;
+    position: absolute;
+    bottom: 0;
+    display: none;
+}
