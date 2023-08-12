@@ -48,6 +48,7 @@ INSTALLED_APPS = [
 
     #Third party apps 
     'bootstrap5',
+    'rest_framework',
     
 
 ]
