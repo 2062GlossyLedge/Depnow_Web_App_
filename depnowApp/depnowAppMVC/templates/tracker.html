@@ -1,12 +1,136 @@
 {% extends "base.html" %}
 <html>
+
 <head>
     <title>Focus Hour Tracker</title>
 </head>
-<body>
 
-    <!-- Add your page content here -->
-    <a href="{% url 'home' %}">Home</a>
-    <!-- Add more navigation links as needed -->
+<body>
+    {% block content %}
+
+    <div class="tracker-widgets">
+        <div id="todo-box">
+            <h1>Current Task</h1>
+
+
+            <!-- <label for="todoCheck"></label> -->
+            <div class="todo-text">
+                <input type="checkbox" id="todoCheck">
+                <p><u>Task: Write a report</u></p>
+                <p>Expected time to complete task: 15hrs</p>
+                <p>Amount of time already spent on task: 5.6hrs</p>
+                <p>Offical Due Date: August 10, 2023</p>
+
+            </div>
+
+        </div>
+
+
+
+        <div id="timer">
+            <h1>Focus Tracker </h1>
+            <select class="tracker_type" onchange="location = this.value;">
+                <option value="" selected disabled>Options</option>
+                <option value="{% url 'stopwatch' %}" data-url="{% url 'stopwatch' %}">Stopwatch</option>
+                <option value="{% url 'countdown_timer'%}" data-url="{% url 'countdown_timer'}">Countdown Timer</option>
+                <option value="{% url 'manual_tracker'%}" data-url="{% url 'manual_tracker'}">Manually add Focus Session
+                </option>
+
+            </select>
+
+
+
+
+            <br>
+
+            <div>
+                {% block Tracker_content %}{% endblock Tracker_content %}
+            </div>
+
+            <br>
+            {%block endFocusSessionButton%}
+            <div>
+                <button id="button1" type="button" onclick="showPopup()">End Focus Session</button>
+
+
+            </div>
+        </div>
+
+
+        <!-- The modal popup -->
+        <div class="modal" id="modal">
+            <div class="modal-content">
+                <span class="close" onclick="hidePopup()">&times;</span>
+
+                <label for="rating">Productivity Rating:</label>
+                <div class="rating">
+                    <input type="radio" id="star5" name="rating" value="5"><label for="star5">5</label>
+                    <input type="radio" id="star4" name="rating" value="4"><label for="star4">4</label>
+                    <input type="radio" id="star3" name="rating" value="3"><label for="star3">3</label>
+                    <input type="radio" id="star2" name="rating" value="2"><label for="star2">2</label>
+                    <input type="radio" id="star1" name="rating" value="1"><label for="star1">1</label>
+                </div>
+
+                <br>
+                <div class="tally-box" id="tallyBox">
+                    <p>Enter any milestones for your hours focused</p>
+                    <br>
+                    <div class="bar"></div>
+                        <div class="tally" onclick="toggleMilestone(1)"></div>
+                        <label class="time-label">8 AM</label>
+                        <div class="tally" onclick="toggleMilestone(2)"></div>
+                        <label class="time-label">9 AM</label>
+                        <div class="tally" onclick="toggleMilestone(3)"></div>
+                        <label class="time-label">10 AM</label>
+                        <div class="tally" onclick="toggleMilestone(4)"></div>
+                        <label class="time-label">11 AM</label>
+                        <div class="tally" onclick="toggleMilestone(5)"></div>
+                        <label class="time-label">12 PM</label>
+                        <div class="tally" onclick="toggleMilestone(6)"></div>
+                        <label class="time-label">1 PM</label>
+                        <div class="tally" onclick="toggleMilestone(7)"></div>
+                        <label class="time-label">2 PM</label>
+                    
+                </div>
+
+
+                <div class="milestone-box" id="milestoneBox">
+                    <label class="milestone-label">Enter Milestone for <span id="clickedTallyLabel"></span></label>
+                    <input type="text" id="milestoneInput" placeholder="Enter Milestone">
+                    <button onclick="saveMilestone()">Save Milestone</button>
+                </div>
+                <br>
+                <div class="streak-box">
+                    <p>Daily Streak: </p>
+                    <br>
+                    <span class="streak-emoji">🔥</span>
+                    <span class="streak-emoji">🔥</span>
+                    <span class="streak-emoji">🔥</span>
+                    <span class="streak-emoji">🔥</span>
+                    <span class="streak-emoji">🔥</span>
+                </div>
+                <br>
+                <label for="reflection">Reflection:</label>
+                <textarea id="reflection" name="reflection" rows="4" cols="50"></textarea>
+                <br>
+                <button type="button" onclick="submitFocusSession()">Submit</button>
+            </div>
+        </div>
+
+    </div>
+    {%endblock endFocusSessionButton%}
+    </div>
+    {%load static%}
+    <script src="{% static 'depnowAppMVC/tracker.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'depnowAppMVC/tracker.css' %}">
+    <script src="{% static 'depnowAppMVC/tallies.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'depnowAppMVC/tallies.css' %}">
+    <link rel="stylesheet" href="{% static 'depnowAppMVC/streaks.css' %}">
+
+    {%endblock content%}
+
+
+
 </body>
+
 </html>

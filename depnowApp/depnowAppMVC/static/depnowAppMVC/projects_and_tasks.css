@@ -1,0 +1,117 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #2D2D45;
+}
+
+.Projects-and-tasks-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.sidebar {
+    width: 250px;
+    background-color: #333;
+    color: #fff;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.sidebar h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.project-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.project-list li {
+    margin-bottom: 5px;
+    cursor: pointer;
+}
+
+.project-list li:hover {
+    text-decoration: underline;
+}
+
+.new-project-button {
+    background-color: steelblue;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.new-project-button:hover {
+    background-color: #0056b3;
+}
+
+.content {
+    padding: 20px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.task-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: #333;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.content.AI-Assistant {
+    color: white;
+    background-color: #333;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.new-task-button {
+    background-color: steelblue;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.new-task-button:hover {
+    background-color: #0056b3;
+}
+
+/* Additional styles for task details */
+.task-name {
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.due-date,
+.expected-finish {
+    margin-right: 10px;
+}
+
+.start-focus {
+    background-color: #32cd32;
+    border: none;
+    color: #fff;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.start-focus:hover {
+    background-color: #228b22;
+}
+
+.project-details {
+    color: white;
+}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Project Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    {%block content%}
+    <div class="Projects-and-tasks-container">
+        <div class="sidebar">
+            <h1>My Projects</h1>
+            <ul class="project-list">
+                <li data-project="Project 1">Project 1</li>
+                <li data-project="Project 2">Project 2</li>
+                <li data-project="Project 3">Project 3</li>
+                <!-- Add more project items -->
+            </ul>
+            <button class="new-project-button">New Project</button>
+        </div>
+    <div class="content tasks">
+        <!-- Content of the main area -->
+        <div class="project-details">
+            <h1 id="project-title"></h1>
+            <ul class="task-list">
+                
+            </ul>
+            <button class="new-task-button">New Task</button>
+        </div>
+        <h1 style="color: white; margin-top: 15px">AI Assistant</h1>
+        <div class="content AI-Assistant">
+           
+        </div>
+    </div>
+
+    
+</div>
+
+    {%load static%}
+    <link rel="stylesheet" href="{% static 'depnowAppMVC/projects_and_tasks.css' %}">
+    <script src="{% static 'depnowAppMVC/projects_and_tasks.js'%}"></script>
+
+    {%endblock content%}
+
+</body>
+
+</html>

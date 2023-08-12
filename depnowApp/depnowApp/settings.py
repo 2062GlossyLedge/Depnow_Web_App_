@@ -41,7 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #My apps
     'depnowAppMVC',
+    'users',
+
+    #Third party apps 
     'bootstrap5',
     
 
@@ -63,7 +68,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'APP_DIRS': True,
-        'DIRS': [os.path.join('/Users/Ayden Smith/Downloads/depnow/depnowApp/depnowAppMVC', 'templates')],
+        'DIRS': [os.path.join('/Users/Ayden Smith/OneDrive/Documents/Personal_Projects/depnow2/Depnow_Web_App_/depnowApp/depnowAppMVC', 'templates')],
 
         'OPTIONS': {
             'context_processors': [
@@ -132,9 +137,24 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+# Define the static URL and the directory where static files are collected
+
 STATIC_URL = 'static/'
+
+STATIC_ROOT = BASE_DIR / 'static'
+
+# Add the directory where your static files (CSS, JS, images, etc.) are located
+STATICFILES_DIRS = [
+    BASE_DIR / 'depnowAppMVC' / 'static',
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Specify the directory where uploaded media files will be stored
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Specify the base URL for serving media files
+MEDIA_URL = '/media/'
