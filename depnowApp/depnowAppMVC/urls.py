@@ -14,5 +14,7 @@ urlpatterns = [
     path('countdown_timer/', views.countdown_timer, name='countdown_timer'),
     path('projects_and_tasks', views.projects_and_tasks, name='projects_and_tasks'),
 
+    # path('user_profile_info/', views.user_profile_info, name='user_profile_info')
+
 
 ]
