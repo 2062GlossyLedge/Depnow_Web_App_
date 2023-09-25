@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User #authentication system
+#Efrom django.contrib.auth.models import User #authentication system
 
 
 
@@ -54,6 +54,9 @@ class FocusSession(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # Other fields as needed
+    # def __str__(self):
+    #     """Return a string representation of the model."""
+    #     return str(self.start_time)
 
 class Tally(models.Model):
     id = models.AutoField(primary_key=True)

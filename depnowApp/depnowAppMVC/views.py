@@ -7,7 +7,13 @@ from rest_framework.response import Response
 from rest_framework import status
 import requests, json, time, random
 from django.contrib.auth.decorators import login_required
+import datetime
 
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+
+from .forms import FocusedTimeStart, FocusedTimeEnd
 
 # Create your views here.
 def base(request):
@@ -36,7 +42,9 @@ def submit_selection(request):
         # Handle the selected_time as needed
     return render(request, 'tracker.html')
 
+@login_required
 def stopwatch(request):
+
     return render(request, 'stopwatch.html')
 
 def countdown_timer(request):
@@ -44,7 +52,35 @@ def countdown_timer(request):
     return render(request, 'countdown_timer.html', {'options': options})
 
 def manual_tracker(request):
-    return render(request, 'manual_tracker.html')
+    #focusSession = get_object_or_404(FocusSession, id=focus_session_id)
+
+    #When submit button for manual tracker is clicked
+    if request.method == 'POST':
+        form1 = FocusedTimeStart(request.POST)
+        form2 = FocusedTimeEnd(request.POST)
+        if all([form1.is_valid(), form2.is_valid()]):
+            focusSession = form1.save(commit=False)
+            focusSession.start_time = form1.cleaned_data['start_time'] #name of form1 field
+           # focusSession.save()
+            print("form1", form1.cleaned_data)
+
+            focusSessionEnd = form2.save(commit=False)
+            focusSessionEnd.end_time = form2.cleaned_data['end_time'] #name of form2 field
+            #focusSession.save()
+            print("form2", form2.cleaned_data)
+            
+            #focusSessionEnd.end_time = focusSession
+            focusSessionEnd.save()
+            #return HttpResponseRedirect(reverse('slideshow'))
+    else:
+            form1 = FocusedTimeStart()
+            form2 = FocusedTimeEnd()
+    context = {
+    'form1': form1,
+    'form2': form2
+    #'focusSession': focusSession,
+}
+    return render(request, 'manual_tracker.html', context)
 
 def projects_and_tasks(request):
     return render(request, 'projects_and_tasks.html')
