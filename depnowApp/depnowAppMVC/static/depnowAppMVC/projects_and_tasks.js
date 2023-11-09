@@ -1,56 +1,115 @@
-const projectListItems = document.querySelectorAll('.project-list li');
-const projectDetails = document.querySelector('.project-details');
-const projectTitle = projectDetails.querySelector('h1');
-const taskList = projectDetails.querySelector('.task-list');
-const newTaskButton = projectDetails.querySelector('.new-task-button');
-
-// Add click event listener to project list items
-projectListItems.forEach(item => {
-    item.addEventListener('click', () => {
-        const projectName = item.getAttribute('data-project');
-        displayProjectDetails(projectName);
-    });
-});
-
-// Function to display project details
-function displayProjectDetails(projectName) {
-    projectTitle.textContent = projectName;
-     // Set the project title in the tasks content area
-     document.getElementById('project-title').textContent = projectName;
+// Find the New Project button by class name
+var newProjectButton = document.getElementById("new-project");
 
 
 
-    // Clear existing task list
-    taskList.innerHTML = '';
+// Add a click event listener to the New Project button
 
-    // TODO: Load tasks for the selected project and populate taskList
-     // Simulated tasks for demonstration
-    const tasks = [
-        { name: 'Task 1', dueDate: '2023-08-15', expectedFinish: '5' },
-        { name: 'Task 2', dueDate: '2023-08-18', expectedFinish: '20' },
-        { name: 'Task 3', dueDate: '2023-08-20', expectedFinish: '2' }
-        // Add more tasks as needed
-    ];
+newProjectButton.addEventListener("click", newProject);
 
-    // Populate task list
-    tasks.forEach(task => {
-        const taskItem = document.createElement('li');
-        taskItem.innerHTML = `
+var projectList = document.querySelector('.project-list');
+
+var listItems = projectList.getElementsByTagName('li');
+
+
+
+//Create a new list item when clicking on the "Add" button
+//https://www.w3schools.com/howto/howto_js_todolist.asp
+function newProject() {
+    var li = document.createElement("li");
+    // var projectList = document.getElementById("project-list");
+    var projectName = document.getElementById("project-name-input").value;
+
+    li.setAttribute("data-project", projectName);
+    var t = document.createTextNode(projectName);
+    li.appendChild(t);
+    
+    if (projectName === '') {
+        alert("You must write something!");
+    } else {
+        //document.getElementById("project-list").appendChild(li);
+        projectList.appendChild(li);
+    }
+    document.getElementById("project-name-input").value = "";
+
+    //update project list items
+    listItems = projectList.getElementsByTagName('li');
+}
+var projectTitle = document.getElementById('project-title');
+
+//start for loop before project is clicked on to be ready for click
+projectList.addEventListener('mouseover', displayProjectDetails);
+
+var taskButtonInstance = 0;
+var newTaskButton;
+const taskButtonLoc = document.getElementById('new-task-button-location');
+// Function to display project detailsew
+function displayProjectDetails() {
+    // Add a click event listener to each <li> element
+    for (let i = 0; i < listItems.length; i++) {
+        listItems[i].addEventListener('click', function () {
+            // Get the text content of the clicked <li> element
+            var projectName = this.textContent;
+    
+            // Display the text content in the display area
+            //displayArea.textContent = 'You clicked: ' + textContent;
+            projectTitle.textContent = projectName;
+
+            //show the button to create a new task when a project is selected. 
+            if(taskButtonInstance == 0)
+            {
+                newTaskButton = document.createElement('button');
+                newTaskButtonName = document.createTextNode('Create New Task')
+                newTaskButton.appendChild(newTaskButtonName);
+                taskButtonLoc.appendChild(newTaskButton);
+                newTaskButton.addEventListener('click', createTask);
+                taskButtonInstance++;
+            }
+           
+           
+        });
+    }
+    
+
+    }
+
+
+
+    const projectDetails = document.querySelector('.project-details');
+
+    var taskList = document.getElementById('task-list');
+   // var newTaskButton = document.getElementById('new-task-button');
+
+    
+
+    function createTask()
+    {
+        var task = document.createElement("li");
+    
+        task.setAttribute("class", 'task');
+        var t = document.createTextNode('task');
+        task.appendChild(t);
+        task.innerHTML = `
             <input type="checkbox"></input>
-            <span class="task-name">${task.name}<br></span>
+            <input type="textbox" placeholder="Enter task"></input>
+            <span class="task-name"><br></span>
             <p>Due date:
-            <input type="date" class="due-date" value="${task.dueDate}" placeholder="Due Date"><br>Expected Hours to finish task:</input>
-            <input type="number" class="expected-finish" value="${task.expectedFinish}" placeholder="Expected Finish"><br></input>
+            <input type="date" class="due-date" value="" placeholder="Due Date"><br>Expected Hours to finish task:</input>
+            <input type="number" class="expected-finish" value="" placeholder="Expected Finish"><br></input>
             <button class="start-focus">Start Focus Session</button>
         `;
-        taskList.appendChild(taskItem);
-    });
+        taskList.appendChild(task);
+    
+        document.getElementById("task-list").appendChild(task);
+    }
 
-    // Show the project details view
-    projectDetails.style.display = 'block';
-}
 
-// Add click event listener to new task button
-newTaskButton.addEventListener('click', () => {
-    // TODO: Implement functionality to create a new task for the selected project
-});
+
+
+
+
+
+
+
+
+
