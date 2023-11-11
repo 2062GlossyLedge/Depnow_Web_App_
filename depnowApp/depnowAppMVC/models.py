@@ -1,4 +1,5 @@
 from django.db import models
+#Efrom django.contrib.auth.models import User #authentication system
 
 
 
@@ -9,10 +10,16 @@ class User(models.Model):
     password = models.CharField(max_length=128)  # Hashed password
     settings = models.JSONField(default=dict)  # Store user settings as JSON data
     # Other fields as needed
+     #established a relationship between user and and model using a foreign key, 
+    #such that the user's topics would be deleted if the user was deleted
+
+user1 = User(id=1, username='JerryTaylor13', email='JerryTaylor13@gmail.com', password='f49fidaf#')
+user1.save()
 
 class Subject(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
+    #owner = models.ForeignKey(User, on_delete=models.CASCADE)
     # Other fields as needed
 
 class UserSubject(models.Model):
@@ -47,6 +54,9 @@ class FocusSession(models.Model):
     task = models.ForeignKey(Task, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # Other fields as needed
+    # def __str__(self):
+    #     """Return a string representation of the model."""
+    #     return str(self.start_time)
 
 class Tally(models.Model):
     id = models.AutoField(primary_key=True)
