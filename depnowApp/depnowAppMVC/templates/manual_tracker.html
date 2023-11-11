@@ -20,8 +20,8 @@
     {% block Tracker_content %}
     <div class="manual-tracker-container">
         <h1>Add Focus Session</h1>
-        <form id="focusForm">
-            <li for="hours">Hours:</li>
+        <div id="focusForm">
+            <!-- <li for="hours">Hours:</li>
             <input type="number" id="hours" name="hours" min="0">
             <li for="minutes">Minutes:</li>
             <input type="number" id="minutes" name="minutes" min="0" max="59">
@@ -44,9 +44,41 @@
             <textarea id="reflection" name="reflection" rows="4" cols="50"></textarea>
             <br>
             <button type="button" onclick="submitFocusSession()">Submit</button>
+            <br> -->
+            <form action="" method="post">
+                {% csrf_token %}
+                <table>
+                {{ form1.as_table }}
+                {{ form2.as_table }}
+                </table>
+                <input type="submit" value="Submit">
+              </form>
+
+              <form action="" method="post">
+                {% csrf_token %}
+                <table>
+               
+                </table>
+              </form>
+
+              <!-- <tr>
+                <th><label for="start_time"> Start Time:</label></th>
+                <td>
+                  <input
+                    id="start_time"
+                    name="start_time"
+                    type='datetime'
+                    value="2016-11-08"
+                    required />
+                  <br />
+                  <span class="helptext">
+                    Enter when you started you focus session
+                  </span>
+                </td>
+              </tr> -->
            
             
-        </form>
+            </div>
     </div>    
     {%block endFocusSessionButton%}{%endblock endFocusSessionButton%}
     {%load static%}
