@@ -12,7 +12,8 @@ urlpatterns = [
     path('stopwatch/', views.stopwatch, name='stopwatch'),
     path('manual_tracker/', views.manual_tracker, name='manual_tracker'),
     path('countdown_timer/', views.countdown_timer, name='countdown_timer'),
-    path('projects_and_tasks', views.projects_and_tasks, name='projects_and_tasks'),
+    path('projects_and_tasks', views.query_view, name='projects_and_tasks'),
+    #path("<int:project_id>/", views.projects_and_tasks, name='projectsIndexed')
 
     # path('user_profile_info/', views.user_profile_info, name='user_profile_info')
 

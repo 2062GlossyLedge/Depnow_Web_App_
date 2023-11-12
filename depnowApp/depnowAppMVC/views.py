@@ -1,3 +1,4 @@
+from os import environ
 from django.shortcuts import render
 from django.http import JsonResponse
 from .models import User, Subject, UserSubject, Project, Task, FocusSession, Tally, Badge, Streak, Reflection
@@ -14,6 +15,8 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 
 from .forms import FocusedTimeStart, FocusedTimeEnd
+
+from openai import OpenAI
 
 # Create your views here.
 def base(request):
@@ -105,60 +108,37 @@ def projects_and_tasks(request):
 @login_required
 def profile(request):
 
-    #userData = {}
-    # if 'username' in request.GET:
-   # username = request.GET['username']
-    # url = 'http://127.0.0.1:8000/user_profile_info/'
-    # headers = {'Accept': 'application/json'}
-    # try:
-    #     response = requests.get(url, headers=headers).json()
-    #     print(response)
-        
-    # except(json.decoder.JSONDecodeError):
-    #     time.sleep(2**try_number + random.random()*0.01) #exponential backoff
-    #     return profile(request,  try_number=try_number+1)
-    
-    # else:
-    #      return render(request, 'profile.html', {'userData': userData})
-    # response = requests.get('http://127.0.0.1:8000/user_profile_info/') # % username)
-    # print("Status Code:", response.status_code)
- 
-    # print(response.content)
-    
-
-    # response.raise_for_status()  # raises exception when not a 2xx response
-
-    # if response.status_code != 200:
-    #     userData = response.json()
-
-    # if (
-    # response.status_code != 204 and
-    # response.headers["content-type"].strip().startswith("application/json")
-    # ):
-    # try:
-    #     userData = response.json()
-    #     print(userData)
-    # except (json.decoder.JSONDecodeError):
-    #     print("JSON decode error")
-        # time.sleep(2**try_number + random.random()*0.01) #exponential backoff
-        # return profile(request,  try_number=try_number+1)
-    
-    # userData = response.json()
-    # print(userData)
-    
-    #return render(request, 'profile.html')
-        
-    
-    # return render(request, 'profile.html', {
-    #     'username': userData['username']
-        
-    # })
-    
-
     context = {
         'username': request.user.username
     }
     return render(request, 'profile.html', context)
    
+client = OpenAI()
 
 
+
+
+def get_completion(prompt): 
+    print(prompt) 
+    completion = client.chat.completions.create(
+  model="gpt-3.5-turbo-1106",
+   max_tokens=50,
+  temperature=0.2,
+  response_format={ "type": "json_object" },
+  messages=[
+    {"role": "system", "content": "You are a helpful assistant designed to output JSON. Always name the key \"response\" "},
+    {"role": "user", "content": prompt}
+  ]
+)
+  
+    response = completion.choices[0].message.content
+    print(response) 
+    return response 
+  
+  
+def query_view(request): 
+    if request.method == 'POST': 
+        prompt = request.POST.get('prompt') 
+        response = get_completion(prompt) 
+        return JsonResponse({'response': response}) 
+    return render(request, 'projects_and_tasks.html') 

@@ -5,12 +5,65 @@
 <head>
     <title>Project Management</title>
     <link rel="stylesheet" href="styles.css">
+
+
     {%load static%}
-   
+
+
 </head>
 
 <body>
     {%block content%}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.0/dist/js.cookie.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+        crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function () {
+            // Send the form on enter keypress and avoid if shift is pressed 
+            $('#prompt').keypress(function (event) {
+                if (event.keyCode === 13 && !event.shiftKey) {
+                    event.preventDefault();
+                    $('form').submit();
+                }
+            });
+            $('form').on('submit', function (event) {
+                event.preventDefault();
+                // get the CSRF token from the cookie 
+                var csrftoken = Cookies.get('csrftoken');
+
+                // set the CSRF token in the AJAX headers 
+                $.ajaxSetup({
+                    headers: { 'X-CSRFToken': csrftoken }
+                });
+                // Get the prompt 
+                var prompt = $('#prompt').val();
+
+                var dateTime = new Date();
+                var time = dateTime.toLocaleTimeString();
+                // Add the prompt to the response div 
+                $('#response').append('<p>(' + time + ') ' + prompt + '</p>');
+                // Clear the prompt 
+                $('#prompt').val('');
+                $.ajax({
+                    url: '/projects_and_tasks',
+                    type: 'POST',
+                    data: { prompt: prompt },
+                    dataType: 'json',
+                    success: function (data) {
+                        var responseObject = JSON.parse(data.response);
+                        responseObject = responseObject.response
+
+
+                        // Now responseObject is a JavaScript object
+                        console.log(responseObject);
+                        $('#response').append('<p>(' + time + ') ' + responseObject + '</p>');
+                    }
+                });
+            });
+        }); 
+    </script>
     <div class="Projects-and-tasks-container">
         <div class="sidebar">
             <h1>My Projects</h1>
@@ -22,27 +75,53 @@
                 <li data-project="Project 3">Project 3</li>
                 <!-- Add more project items -->
             </ul>
-            
-        </div>
-    <div class="content tasks">
-        <!-- Content of the main area -->
-        <div class="project-details">
-            <h1 id="project-title"></h1>
-            <ul id="task-list">
-                
-            </ul>
-            <div id="new-task-button-location">
-            <!-- <button id="new-task-button">New Task</button> -->
-        </div>
-        </div>
-        <h1 style="color: white; margin-top: 15px">AI Assistant</h1>
-        <div class="content AI-Assistant">
-           
-        </div>
-    </div>
 
-    
-</div>
+        </div>
+        <div class="content tasks">
+            <!-- Content of the main area -->
+            <div class="project-details">
+                <h1 id="project-title"></h1>
+
+
+
+
+                <ul id="task-list">
+
+                </ul>
+                <div id="new-task-button-location">
+                    <!-- <button id="new-task-button">New Task</button> -->
+                </div>
+            </div>
+
+            <!-- https://www.geeksforgeeks.org/how-to-implement-chatgpt-in-django/# -->
+            <h1 style="color: white; margin-top: 15px">AI Assistant</h1>
+            <div id="chatbox">
+                <div class="content AI-Assistant">
+
+                    <div class="container p-3">
+                        <div class="mb-3">
+                            <form method="post">
+                                {% csrf_token %}
+                                <label for="prompt" class="form-label"><strong>Prompt: </strong></label>
+                                <textarea class="form-control" type="textarea" id="prompt" name="prompt"
+                                    rows="3"></textarea>
+                                <br>
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                            </form>
+                        </div>
+                        <br>
+                        <div class="mb-3">
+                            <h6>Response:</h6>
+                            <div class="container border overflow-auto h-50" id="response"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
 
     {%load static%}
     <link rel="stylesheet" href="{% static 'depnowAppMVC/projects_and_tasks.css' %}">

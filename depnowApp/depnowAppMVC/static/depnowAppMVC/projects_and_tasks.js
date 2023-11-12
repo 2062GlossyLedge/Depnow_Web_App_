@@ -41,7 +41,7 @@ var projectTitle = document.getElementById('project-title');
 projectList.addEventListener('mouseover', displayProjectDetails);
 
 var taskButtonInstance = 0;
-var newTaskButton;
+// var newTaskButton;
 const taskButtonLoc = document.getElementById('new-task-button-location');
 // Function to display project detailsew
 function displayProjectDetails() {
@@ -55,23 +55,60 @@ function displayProjectDetails() {
             //displayArea.textContent = 'You clicked: ' + textContent;
             projectTitle.textContent = projectName;
 
-            //show the button to create a new task when a project is selected. 
+            //show the button to create a new task when a project is selected. Only 1 button shown.
             if(taskButtonInstance == 0)
             {
-                newTaskButton = document.createElement('button');
+                var newTaskButton = document.createElement('button');
                 newTaskButtonName = document.createTextNode('Create New Task')
                 newTaskButton.appendChild(newTaskButtonName);
                 taskButtonLoc.appendChild(newTaskButton);
                 newTaskButton.addEventListener('click', createTask);
                 taskButtonInstance++;
-            }
+
+
+
+            //     var chatbox = document.createElement('div');
+            //     var title = document.createTextNode('AI Assistant');
+            //     chatbox.appendChild(title);
+            //     var csrftoken = '{ csrf_token }';
+            //     chatbox.innerHTML = `
+            //      <h1 style="color: white; margin-top: 15px">AI Assistant</h1><div class="content AI-Assistant">
+            //     <div class="container p-3">
+            //         <div class="mb-3">
+            //             <form method="post">
+            //             <script>
+            //             var csrf = "{{ csrf_token }}"
+            //             </script>
+            //                 <label for="prompt" class="form-label"><strong>Prompt: </strong></label>
+            //                 <textarea class="form-control" type="textarea" id="prompt" name="prompt"
+            //                     rows="3"></textarea>
+            //                 <br>
+            //                 <button class="btn btn-primary" type="submit">Submit</button>
+            //             </form>
+            //         </div>
+            //         <br>
+            //         <div class="mb-3">
+            //             <h6>Response:</h6>
+            //             <div class="container border overflow-auto h-50" id="response"></div>
+
+            //         </div>
+            //     </div>
+            // </div>`
+
+            // document.getElementById('chatbox').appendChild(chatbox);
+             }
            
            
         });
     }
-    
+
+
+
 
     }
+
+   
+
 
 
 
