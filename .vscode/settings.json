@@ -1,8 +1,9 @@
 {
     "liveServer.settings.multiRootWorkspaceName": "depnow",
     "[python]": {
-        "editor.defaultFormatter": "ms-python.autopep8"
+        "editor.defaultFormatter": "ms-python.black-formatter"
     },
     "python.formatting.provider": "none",
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5501,
+    
 }

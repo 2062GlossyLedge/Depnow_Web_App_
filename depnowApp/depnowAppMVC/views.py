@@ -1,7 +1,18 @@
 from os import environ
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from django.http import JsonResponse
-from .models import User, Subject, UserSubject, Project, Task, FocusSession, Tally, Badge, Streak, Reflection
+from .models import (
+    dnUser,
+    Subject,
+    UserSubject,
+    Project,
+    Task,
+    FocusSession,
+    Tally,
+    Badge,
+    Streak,
+    Reflection,
+)
 from .serializers import UserSerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
@@ -14,131 +25,164 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from .forms import FocusedTimeStart, FocusedTimeEnd
+from .forms import FocusedTimeStart, FocusedTimeEnd, ProjectNameForm, TaskForm
 
 from openai import OpenAI
 
+
 # Create your views here.
 def base(request):
-    return render(request, 'slideshow.html')
+    return render(request, "slideshow.html")
+
 
 def slideshow(request):
-    return render(request, 'slideshow.html')
+    return render(request, "slideshow.html")
 
 
 def data_insights(request):
-    return render(request, 'data_insights.html')
+    return render(request, "data_insights.html")
+
 
 def tracker(request):
-    return render(request, 'tracker.html')
+    return render(request, "tracker.html")
+
 
 def todo_list(request):
-    return render(request, 'todo_list.html')
+    return render(request, "todo_list.html")
+
 
 def tracker(request):
     options = range(10, 61, 5)
-    return render(request, 'tracker.html', {'options': options})
+    return render(request, "tracker.html", {"options": options})
+
 
 def submit_selection(request):
-    if request.method == 'POST':
-        selected_time = request.POST.get('selected_time')
+    if request.method == "POST":
+        selected_time = request.POST.get("selected_time")
         # Handle the selected_time as needed
-    return render(request, 'tracker.html')
+    return render(request, "tracker.html")
+
 
 @login_required
 def stopwatch(request):
+    return render(request, "stopwatch.html")
 
-    return render(request, 'stopwatch.html')
 
 def countdown_timer(request):
     options = range(10, 61, 5)
-    return render(request, 'countdown_timer.html', {'options': options})
+    return render(request, "countdown_timer.html", {"options": options})
+
 
 def manual_tracker(request):
-    #focusSession = get_object_or_404(FocusSession, id=focus_session_id)
+    # focusSession = get_object_or_404(FocusSession, id=focus_session_id)
 
-    #When submit button for manual tracker is clicked
-    if request.method == 'POST':
+    # When submit button for manual tracker is clicked
+    if request.method == "POST":
         form1 = FocusedTimeStart(request.POST)
         form2 = FocusedTimeEnd(request.POST)
         if all([form1.is_valid(), form2.is_valid()]):
             focusSession = form1.save(commit=False)
-            focusSession.start_time = form1.cleaned_data['start_time'] #name of form1 field
-           # focusSession.save()
+            focusSession.start_time = form1.cleaned_data[
+                "start_time"
+            ]  # name of form1 field
+            # focusSession.save()
             print("form1", form1.cleaned_data)
 
             focusSessionEnd = form2.save(commit=False)
-            focusSessionEnd.end_time = form2.cleaned_data['end_time'] #name of form2 field
-            #focusSession.save()
+            focusSessionEnd.end_time = form2.cleaned_data[
+                "end_time"
+            ]  # name of form2 field
+            # focusSession.save()
             print("form2", form2.cleaned_data)
-            
-            #focusSessionEnd.end_time = focusSession
+
+            # focusSessionEnd.end_time = focusSession
             focusSessionEnd.save()
-            #return HttpResponseRedirect(reverse('slideshow'))
+            # return HttpResponseRedirect(reverse('slideshow'))
     else:
-            form1 = FocusedTimeStart()
-            form2 = FocusedTimeEnd()
+        form1 = FocusedTimeStart()
+        form2 = FocusedTimeEnd()
     context = {
-    'form1': form1,
-    'form2': form2
-    #'focusSession': focusSession,
-}
-    return render(request, 'manual_tracker.html', context)
+        "form1": form1,
+        "form2": form2
+        #'focusSession': focusSession,
+    }
+    return render(request, "manual_tracker.html", context)
+
 
 def projects_and_tasks(request):
-    return render(request, 'projects_and_tasks.html')
+    return render(request, "projects_and_tasks.html")
 
 
-# @api_view(['GET', 'POST'])
-# def user_profile_info(request):
-
-#     #if request.method == 'GET':
-#         user = User.objects.filter(id=request.user.id)
-#         #user = User.objects.all()
-#         serializer = UserSerializer(user, many=True)
-#         return JsonResponse({"user": serializer.data}, safe=False)
-#     # elif request.method == 'POST':
-#     #     serializer = UserSerializer(data=request.data)
-#     #     if serializer.is_valid():
-#     #         serializer.save()
-#     #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-#https://simpleisbetterthancomplex.com/tutorial/2018/02/03/how-to-use-restful-apis-with-django.html
 @login_required
 def profile(request):
+    context = {"username": request.user.username}
+    return render(request, "profile.html", context)
 
-    context = {
-        'username': request.user.username
-    }
-    return render(request, 'profile.html', context)
-   
+
 client = OpenAI()
 
 
-
-
-def get_completion(prompt): 
-    print(prompt) 
+def get_completion(prompt):
+    print(prompt)
     completion = client.chat.completions.create(
-  model="gpt-3.5-turbo-1106",
-   max_tokens=50,
-  temperature=0.2,
-  response_format={ "type": "json_object" },
-  messages=[
-    {"role": "system", "content": "You are a helpful assistant designed to output JSON. Always name the key \"response\" "},
-    {"role": "user", "content": prompt}
-  ]
-)
-  
+        model="gpt-3.5-turbo-1106",
+        max_tokens=50,
+        temperature=0.2,
+        response_format={"type": "json_object"},
+        messages=[
+            {
+                "role": "system",
+                "content": 'You are a helpful assistant designed to output JSON. Always name the key "response" ',
+            },
+            {"role": "user", "content": prompt},
+        ],
+    )
+
     response = completion.choices[0].message.content
-    print(response) 
-    return response 
-  
-  
-def query_view(request): 
-    if request.method == 'POST': 
-        prompt = request.POST.get('prompt') 
-        response = get_completion(prompt) 
-        return JsonResponse({'response': response}) 
-    return render(request, 'projects_and_tasks.html') 
+    print(response)
+    return response
+
+
+def query_view(request):
+    form1 = ProjectNameForm()
+    form2 = TaskForm()
+    projects = Project.objects.filter(user=request.user)
+    print(projects)
+    # projectList = list()
+    if request.method == "POST":
+        prompt = request.POST.get("prompt")
+        projectName = request.POST.get("project-name-input")
+
+        form1 = ProjectNameForm(request.POST)
+        form2 = TaskForm(request.POST)
+
+        if prompt:
+            response = get_completion(prompt)
+            return JsonResponse({"response": response})
+        elif form1.is_valid():
+            project = form1.save(commit=False)
+            project.name = form1.cleaned_data["name"]
+            project.user = request.user
+            project.save()
+            return redirect("projects_and_tasks")
+        elif form2.is_valid():
+            task = form2.save(commit=False)
+            task.title = form1.cleaned_data["title"]
+            task.description = form1.cleaned_data["description"]
+            task.deadline = form1.cleaned_data["deadline"]
+
+            project.user = request.user
+            project.save()
+            return redirect("projects_and_tasks")
+    context = {"form1": form1, "projects": projects}
+    return render(request, "projects_and_tasks.html", context)
+
+
+def projects(request):
+    context = {"projects": projects}
+
+    return render(request, "projects_and_tasks.html", context)
+
+
+def tasks_and_AI_chat(request):
+    return render(request, "tasks_and_AI_chat.html")

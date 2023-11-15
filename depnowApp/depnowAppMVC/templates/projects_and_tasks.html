@@ -22,13 +22,13 @@
     <script>
         $(document).ready(function () {
             // Send the form on enter keypress and avoid if shift is pressed 
-            $('#prompt').keypress(function (event) {
-                if (event.keyCode === 13 && !event.shiftKey) {
-                    event.preventDefault();
-                    $('form').submit();
-                }
-            });
-            $('form').on('submit', function (event) {
+            // $('#prompt').keypress(function (event) {
+            //     if (event.keyCode === 13 && !event.shiftKey) {
+            //         event.preventDefault();
+            //         $('form').submit();
+            //     }
+            // });
+            $('#message-to-AI').on('click', function (event) {
                 event.preventDefault();
                 // get the CSRF token from the cookie 
                 var csrftoken = Cookies.get('csrftoken');
@@ -62,19 +62,58 @@
                     }
                 });
             });
+            // $('#new-project-button').on('click', function (event) {
+            //     event.preventDefault();
+            //     // get the CSRF token from the cookie 
+            //     var csrftoken = Cookies.get('csrftoken');
+
+            //     // set the CSRF token in the AJAX headers 
+            //     $.ajaxSetup({
+            //         headers: { 'X-CSRFToken': csrftoken }
+            //     });
+            //     // Get the prompt 
+            //     var projectName = $('#project-name-input').val();
+
+            //     //add project to project list
+            //     $('#project-list').append('<li>' + projectName + '</li>');
+            //     //clear new project prompt
+            //     $('#project-name-input').val('');
+            // //     $.ajax({
+            // //     url: '/projects_and_tasks',  
+            // //     type: 'POST',
+            // //     data: {projectName : projectName},
+            // //     dataType: 'json',
+            // //     success: function(data) {
+            // //         $('#project-list').append('<li>' + )
+            // //     },
+            // //     error: function(error) {
+          
+            // //         console.error('Error:', error);
+            // //     }
+            // // });
+            // });
         }); 
     </script>
     <div class="Projects-and-tasks-container">
         <div class="sidebar">
             <h1>My Projects</h1>
-            <input type="text" id="project-name-input" placeholder="Project name">
-            <button class="new-project-button" id='new-project'>New Project</button>
+            <form id='new-project-form' action="{% url 'projects_and_tasks' %}" method="post">
+             {% csrf_token %}
+             {{form1}}
+            <!-- <input type="text" id="project-name-input" placeholder="Project name"> -->
+            <button class="new-project-button" id='new-project-button'>New Project</button>
+            </form>
+           
             <ul class="project-list" id="project-list">
                 <li data-project="Project 1">Project 1</li>
                 <li data-project="Project 2">Project 2</li>
                 <li data-project="Project 3">Project 3</li>
+                {% for project in projects%}
+                <li> <a href="{% url 'tasks_and_AI_chat' %}"> {{project.name}}</a></li>
+                {% endfor %}
                 <!-- Add more project items -->
             </ul>
+            
 
         </div>
         <div class="content tasks">
@@ -84,10 +123,11 @@
 
 
 
-
+                <form method="post" action="{% url 'projects_and_tasks' %}">
                 <ul id="task-list">
 
                 </ul>
+                </form>
                 <div id="new-task-button-location">
                     <!-- <button id="new-task-button">New Task</button> -->
                 </div>
@@ -106,7 +146,7 @@
                                 <textarea class="form-control" type="textarea" id="prompt" name="prompt"
                                     rows="3"></textarea>
                                 <br>
-                                <button class="btn btn-primary" type="submit">Submit</button>
+                                <button class="btn btn-primary" type="submit" id="message-to-AI">Submit</button>
                             </form>
                         </div>
                         <br>
