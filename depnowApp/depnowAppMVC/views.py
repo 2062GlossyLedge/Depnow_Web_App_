@@ -171,8 +171,6 @@ def query_view(request):
             task.description = form1.cleaned_data["description"]
             task.deadline = form1.cleaned_data["deadline"]
 
-            project.user = request.user
-            project.save()
             return redirect("projects_and_tasks")
     context = {"form1": form1, "projects": projects}
     return render(request, "projects_and_tasks.html", context)
@@ -184,5 +182,44 @@ def projects(request):
     return render(request, "projects_and_tasks.html", context)
 
 
-def tasks_and_AI_chat(request):
-    return render(request, "tasks_and_AI_chat.html")
+def tasks_and_AI_chat(request, project_id):
+    form1 = ProjectNameForm()
+    projectEntry = Project.objects.get(id=project_id)
+    projects = Project.objects.filter(user=request.user)
+
+    context = {
+        "form1": form1,
+        "projects": projects,
+        "projectEntry": projectEntry,
+    }
+    return render(request, "tasks_and_AI_chat.html", context)
+
+
+def create_task(request, project_id):
+    form1 = ProjectNameForm()
+
+    projects = Project.objects.filter(user=request.user)
+    form2 = TaskForm()
+    tasks = Task.objects.filter(user=request.user)
+    projectEntry = Project.objects.get(id=project_id)
+
+    if request.method == "POST":
+        form2 = TaskForm(request.POST)
+        print("hoy")
+        if form2.is_valid():
+            task = form2.save(commit=False)
+            task.title = form2.cleaned_data["title"]
+            task.description = form2.cleaned_data["description"]
+            task.deadline = form2.cleaned_data["deadline"]
+            task.project = projectEntry
+            task.save()
+            tasks = Task.objects.filter(user=request.user)
+            return redirect("create_task")
+    context = {
+        "form1": form1,
+        "form2": form2,
+        "projects": projects,
+        "projectEntry": projectEntry,
+        "tasks": tasks,
+    }
+    return render(request, "create_task.html", context)

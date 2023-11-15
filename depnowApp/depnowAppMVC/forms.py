@@ -62,3 +62,10 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ["title", "description", "deadline"]
+        widgets = {
+            "title": forms.TextInput(attrs={"placeholder": "Enter task name"}),
+            "description": forms.Textarea(
+                attrs={"placeholder": "Enter task description"}
+            ),
+            "deadline": forms.DateInput(attrs={"type": "date"}),
+        }

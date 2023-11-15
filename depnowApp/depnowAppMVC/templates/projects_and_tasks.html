@@ -109,16 +109,22 @@
                 <li data-project="Project 2">Project 2</li>
                 <li data-project="Project 3">Project 3</li>
                 {% for project in projects%}
-                <li> <a href="{% url 'tasks_and_AI_chat' %}"> {{project.name}}</a></li>
+                <li> <a href="{% url 'tasks_and_AI_chat' project.id %}"> {{project.name}}</a></li>
                 {% endfor %}
                 <!-- Add more project items -->
             </ul>
             
 
         </div>
-        <div class="content tasks">
-            <!-- Content of the main area -->
-            <div class="project-details">
+         <div class="content tasks">
+            {%block Chat&AIView %}
+
+            {%endblock Chat&AIView%}
+
+            {% block createNewTask %}
+
+            {%endblock createNewTask %}
+           <!-- <div class="project-details">
                 <h1 id="project-title"></h1>
 
 
@@ -129,12 +135,11 @@
                 </ul>
                 </form>
                 <div id="new-task-button-location">
-                    <!-- <button id="new-task-button">New Task</button> -->
                 </div>
-            </div>
+            </div> -->
 
             <!-- https://www.geeksforgeeks.org/how-to-implement-chatgpt-in-django/# -->
-            <h1 style="color: white; margin-top: 15px">AI Assistant</h1>
+           <!-- <h1 style="color: white; margin-top: 15px">AI Assistant</h1>
             <div id="chatbox">
                 <div class="content AI-Assistant">
 
@@ -157,9 +162,9 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
-
+ 
 
     </div>
 

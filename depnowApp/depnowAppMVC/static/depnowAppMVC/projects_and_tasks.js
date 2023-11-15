@@ -49,24 +49,25 @@ function displayProjectDetails() {
     for (let i = 0; i < listItems.length; i++) {
         listItems[i].addEventListener('click', function () {
             // Get the text content of the clicked <li> element
-            var projectName = this.textContent;
+            // var projectName = this.textContent;
     
-            // Display the text content in the display area
-            //displayArea.textContent = 'You clicked: ' + textContent;
-            projectTitle.textContent = projectName;
+            // // Display the text content in the display area
+            // //displayArea.textContent = 'You clicked: ' + textContent;
+            // projectTitle.textContent = projectName;
 
             //show the button to create a new task when a project is selected. Only 1 button shown.
-            if(taskButtonInstance == 0)
-            {
-                var newTaskButton = document.createElement('button');
-                newTaskButtonName = document.createTextNode('Create New Task')
-                newTaskButton.appendChild(newTaskButtonName);
-                taskButtonLoc.appendChild(newTaskButton);
-                newTaskButton.addEventListener('click', showPopup);
-                taskButtonInstance++;
+            // if(taskButtonInstance == 0)
+            // {
+            //     var newTaskButton = document.createElement('button');
+            //     newTaskButtonName = document.createTextNode('Create New Task')
+            //     newTaskButton.appendChild(newTaskButtonName);
+            //     taskButtonLoc.appendChild(newTaskButton);
+            //     newTaskButton.addEventListener('click', showPopup);
+            //     taskButtonInstance++;
 
 
-             }
+            //  }
+
            
            
         });
@@ -78,74 +79,75 @@ function displayProjectDetails() {
     }
 
    
+//     document.getElementById('new-task-button').addEventListener('click', showPopup);
 
 
 
 
-    const projectDetails = document.querySelector('.project-details');
+//     const projectDetails = document.querySelector('.project-details');
 
-    var taskList = document.getElementById('task-list');
-   // var newTaskButton = document.getElementById('new-task-button');
+//     var taskList = document.getElementById('task-list');
+//    // var newTaskButton = document.getElementById('new-task-button');
 
     
 
-    function createTask()
-    {
-        var task = document.createElement("li");
+// //     function createTask()
+// //     {
+// //         var task = document.createElement("li");
     
-        task.setAttribute("class", 'task');
-        task.setAttribute("href", "{% url 'tracker' %}");
-        var t = document.createTextNode('task yo');
-        task.appendChild(t);
-        task.innerHTML = `
-<!-- The modal popup -->
-        <div class="modal" id="modal">
-            <div class="modal-content">
-                <span class="close" onclick="hidePopup()">&times;</span>
-
-                 <input type="checkbox"></input>
-            <input type="textbox" placeholder="Enter task"></input>
-            <span class="task-name"><br></span>
-            <p>Due date:
-            <input type="date" class="due-date" value="" placeholder="Due Date"><br>Expected Hours to finish task:</input> 
-            <!-- <input type="number" class="expected-finish" value="" placeholder="Expected Finish"><br></input>
-            <button class="start-focus">Start Focus Session</button>-->
-                <br>
-                <button type="button" id='createTask'>Create Task</button>
-            </div>
-        </div>
+// //         task.setAttribute("class", 'task');
+// //         task.setAttribute("href", "{% url 'tracker' %}");
+// //         var t = document.createTextNode('task yo');
+// //         task.appendChild(t);
+// //         task.innerHTML = `
+// // <!-- The modal popup -->
+// //         <div class="modal" id="modal">
+// //             <div class="modal-content">
+// //                 <span class="close" onclick="hidePopup()">&times;</span>
+// //                     {{form2}}
+           
+// //                 <br>
+// //                 <button type="button" id='createTask'>Create Task</button>
+// //             </div>
+// //         </div>
 
           
-        `;
-        taskList.appendChild(task);
+// //         `;
+// //         taskList.appendChild(task);
     
-        document.getElementById("task-list").appendChild(task);
+// //         document.getElementById("task-list").appendChild(task);
 
-        document.getElementById('createTask').addEventListener('click', hidePopup)
+// //         document.getElementById('createTask').addEventListener('click', hidePopup)
 
-    }
-
-
+// //     }
 
 
-// Show the modal popup
-function showPopup() {
-    createTask();
-    var modal = document.getElementById('modal');
-    modal.style.display = 'block';
+
+
+// // Show the modal popup
+// function showPopup() {
+//     //createTask();
+//     var modal = document.getElementById('modal');
+//     modal.style.display = 'block';
     
-}
+// }
 
 
-// Hide the modal popup
-function hidePopup() {
-    var modal = document.getElementById('modal');
-    modal.style.display = 'none';
-}
-
-
-
+// // Hide the modal popup
+// function hidePopup() {
+//     var modal = document.getElementById('modal');
+//     modal.style.display = 'none';
+// }
 
 
 
 
+
+
+
+//  <input type="textbox" placeholder="Enter task"></input>
+//             <span class="task-name"><br></span>
+//             <p>Due date:
+//             <input type="date" class="due-date" value="" placeholder="Due Date"><br>Expected Hours to finish task:</input> 
+//             <!-- <input type="number" class="expected-finish" value="" placeholder="Expected Finish"><br></input>
+//             <button class="start-focus">Start Focus Session</button>--></p>

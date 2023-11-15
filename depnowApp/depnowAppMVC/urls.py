@@ -14,9 +14,14 @@ urlpatterns = [
     path("countdown_timer/", views.countdown_timer, name="countdown_timer"),
     path("projects_and_tasks", views.query_view, name="projects_and_tasks"),
     path(
-        "tasks_and_AI_chat",
+        "tasks_and_AI_chat/<int:project_id>/",
         views.tasks_and_AI_chat,
         name="tasks_and_AI_chat",
+    ),
+    path(
+        "create_task/<int:project_id>/",
+        views.create_task,
+        name="create_task",
     ),
     # path("<int:project_id>/", views.projects_and_tasks, name='projectsIndexed')
     # path('user_profile_info/', views.user_profile_info, name='user_profile_info')

@@ -1,4 +1,4 @@
-
+ {%extends "projects_and_tasks.html" %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -9,8 +9,59 @@
     {%load static%}
   </head>
   <body>
-   {%block content%}
-        {%include "projects_and_tasks.html" %}
-       {%endblock content%}
+   {%block Chat&AIView%}
+       
+        <div class="content tasks">
+            <!-- Content of the main area -->
+            <div class="project-details">
+                <h1 id="project-title">{{projectEntry.name}}</h1>
+                <button id="new-task-button"><a href="{% url 'create_task' projectEntry.id %}"> new task</a></button>
+
+
+
+                <form method="post" action="{% url 'projects_and_tasks' %}">
+                <ul id="task-list">
+                  {%for task in tasks%}
+                  <li>{{task.title}}</li>
+                  {%endfor%}
+                </ul>
+                </form>
+                <div id="new-task-button-location">
+                    <!-- <button id="new-task-button">New Task</button> -->
+                </div>
+            </div>
+
+            <!-- https://www.geeksforgeeks.org/how-to-implement-chatgpt-in-django/# -->
+            <h1 style="color: white; margin-top: 15px">AI Assistant</h1>
+            <div id="chatbox">
+                <div class="content AI-Assistant">
+
+                    <div class="container p-3">
+                        <div class="mb-3">
+                            <form method="post">
+                                {% csrf_token %}
+                                <label for="prompt" class="form-label"><strong>Prompt: </strong></label>
+                                <textarea class="form-control" type="textarea" id="prompt" name="prompt"
+                                    rows="3"></textarea>
+                                <br>
+                                <button class="btn btn-primary" type="submit" id="message-to-AI">Submit</button>
+                            </form>
+                        </div>
+                        <br>
+                        <div class="mb-3">
+                            <h6>Response:</h6>
+                            <div class="container border overflow-auto h-50" id="response"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+ {%load static%}
+    <!-- <link rel="stylesheet" href="{% static 'depnowAppMVC/tasks_and_AI_chat.css' %}"> -->
+    <!-- <script src="{% static 'depnowAppMVC/tasks_and_AI_chat.js'%}"></script> -->
+
+
+       {%endblock Chat&AIView%}
   </body>
 </html>
