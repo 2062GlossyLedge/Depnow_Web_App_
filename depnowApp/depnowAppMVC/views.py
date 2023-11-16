@@ -147,7 +147,7 @@ def query_view(request):
     form1 = ProjectNameForm()
     form2 = TaskForm()
     projects = Project.objects.filter(user=request.user)
-    print(projects)
+    # print(projects)
     # projectList = list()
     if request.method == "POST":
         prompt = request.POST.get("prompt")
@@ -165,11 +165,11 @@ def query_view(request):
             project.user = request.user
             project.save()
             return redirect("projects_and_tasks")
-        elif form2.is_valid():
-            task = form2.save(commit=False)
-            task.title = form1.cleaned_data["title"]
-            task.description = form1.cleaned_data["description"]
-            task.deadline = form1.cleaned_data["deadline"]
+            # elif form2.is_valid():
+            #     task = form2.save(commit=False)
+            #     task.title = form1.cleaned_data["title"]
+            #     task.description = form1.cleaned_data["description"]
+            #     task.deadline = form1.cleaned_data["deadline"]
 
             return redirect("projects_and_tasks")
     context = {"form1": form1, "projects": projects}
@@ -186,11 +186,13 @@ def tasks_and_AI_chat(request, project_id):
     form1 = ProjectNameForm()
     projectEntry = Project.objects.get(id=project_id)
     projects = Project.objects.filter(user=request.user)
+    tasks = Task.objects.filter(user=request.user, id=project_id)
 
     context = {
         "form1": form1,
         "projects": projects,
         "projectEntry": projectEntry,
+        "tasks": tasks,
     }
     return render(request, "tasks_and_AI_chat.html", context)
 
@@ -199,25 +201,25 @@ def create_task(request, project_id):
     form1 = ProjectNameForm()
 
     projects = Project.objects.filter(user=request.user)
-    form2 = TaskForm()
+    form3 = TaskForm()
     tasks = Task.objects.filter(user=request.user)
     projectEntry = Project.objects.get(id=project_id)
-
     if request.method == "POST":
-        form2 = TaskForm(request.POST)
-        print("hoy")
-        if form2.is_valid():
-            task = form2.save(commit=False)
-            task.title = form2.cleaned_data["title"]
-            task.description = form2.cleaned_data["description"]
-            task.deadline = form2.cleaned_data["deadline"]
+        form3 = TaskForm(request.POST)
+        if form3.is_valid():
+            task = form3.save(commit=False)
+            task.title = form3.cleaned_data["title"]
+            task.description = form3.cleaned_data["description"]
+            task.deadline = form3.cleaned_data["deadline"]
             task.project = projectEntry
+            task.user = request.user
+            task.id = project_id
             task.save()
             tasks = Task.objects.filter(user=request.user)
-            return redirect("create_task")
+            return redirect(f"/tasks_and_AI_chat/{projectEntry.id}")
     context = {
         "form1": form1,
-        "form2": form2,
+        "form3": form3,
         "projects": projects,
         "projectEntry": projectEntry,
         "tasks": tasks,

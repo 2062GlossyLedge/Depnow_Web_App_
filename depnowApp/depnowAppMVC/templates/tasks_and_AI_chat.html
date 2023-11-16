@@ -19,13 +19,14 @@
 
 
 
-                <form method="post" action="{% url 'projects_and_tasks' %}">
+                <!-- <form method="post" action="{% url 'projects_and_tasks' %}"> -->
                 <ul id="task-list">
+                  <li>example</li>
                   {%for task in tasks%}
-                  <li>{{task.title}}</li>
+                  <li><p>{{task.title}}</p> <p>{{task.description}}</p> <p>{{task.deadline}}</p> </li>
                   {%endfor%}
                 </ul>
-                </form>
+                <!-- </form> -->
                 <div id="new-task-button-location">
                     <!-- <button id="new-task-button">New Task</button> -->
                 </div>

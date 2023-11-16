@@ -11,9 +11,10 @@
   <body>
     {% block createNewTask %}   <!-- The modal popup -->
     <h1>Create New Task For Project ...</h1>
-    <form action="{% url 'tasks_and_AI_chat' projectEntry.id %}" method="post">
-    {{form2.as_p}}
-           <button type="button" id='new-task-button'>Create Task</button>
+    <form action="{% url 'create_task' projectEntry.id %}" method="post">
+        {% csrf_token %}
+        {{form3.as_p}}
+        <button id='new-task-button'>Create Task</button>
     </form>
         <!-- <div class="modal" id="modal">
             <div class="modal-content">
