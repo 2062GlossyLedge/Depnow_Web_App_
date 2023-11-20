@@ -69,3 +69,12 @@ class TaskForm(forms.ModelForm):
             ),
             "deadline": forms.DateInput(attrs={"type": "date"}),
         }
+
+
+class TaskCheckoffForm(forms.Form):
+    taskCheckoff = forms.BooleanField(required=False)
+    # class Meta:
+    #     model = Task
+    #     fields = ["completion_status"]
+    #     labels = {"completion_status": ""}
+    #     widgets = {"completion_status": forms.CheckboxInput()}

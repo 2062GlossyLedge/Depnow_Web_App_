@@ -25,7 +25,13 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 
-from .forms import FocusedTimeStart, FocusedTimeEnd, ProjectNameForm, TaskForm
+from .forms import (
+    FocusedTimeStart,
+    FocusedTimeEnd,
+    ProjectNameForm,
+    TaskForm,
+    TaskCheckoffForm,
+)
 
 from openai import OpenAI
 
@@ -184,15 +190,40 @@ def projects(request):
 
 def tasks_and_AI_chat(request, project_id):
     form1 = ProjectNameForm()
+    form2 = TaskCheckoffForm()
+
     projectEntry = Project.objects.get(id=project_id)
     projects = Project.objects.filter(user=request.user)
     tasks = Task.objects.filter(user=request.user, id=project_id)
+    taskState = ""
+
+    if request.method == "POST":
+        form2 = TaskCheckoffForm(request.POST)
+        if form2.is_valid():
+            # task = form2.save(commit=False)
+            # task.completion_status = form2.cleaned_data["completion_status"]
+            # task.user = request.user
+            # task.id = project_id
+            # task.save()
+            taskState = request.POST.get("taskCheckoff", False)
+            print(taskState)
+            # if taskState == 'on':
+            # set task field to true
+            # tasks = Task.objects.filter(user=request.user)
+            # return redirect(f"/tasks_and_AI_chat/{projectEntry.id}")
+
+    # if request.method == "GET":
+    #     taskState = request.GET["taskCheckoff"]
+    #     print(taskState)
 
     context = {
         "form1": form1,
+        "form2": form2,
         "projects": projects,
         "projectEntry": projectEntry,
         "tasks": tasks,
+        "taskState": taskState
+        # "taskCheckoff": taskCheckoff,
     }
     return render(request, "tasks_and_AI_chat.html", context)
 

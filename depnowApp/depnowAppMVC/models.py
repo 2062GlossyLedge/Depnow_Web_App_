@@ -49,7 +49,7 @@ class Task(models.Model):
     description = models.TextField()
     deadline = models.DateTimeField(null=True, blank=True)
     # focus_hours = models.FloatField(default=0.0)
-    # completion_status = models.BooleanField(default=False)
+    completion_status = models.BooleanField(default=False)
     project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # Other fields as needed
