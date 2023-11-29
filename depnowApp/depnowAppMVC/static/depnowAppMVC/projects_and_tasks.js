@@ -42,7 +42,7 @@ projectList.addEventListener('mouseover', displayProjectDetails);
 
 var taskButtonInstance = 0;
 // var newTaskButton;
-const taskButtonLoc = document.getElementById('new-task-button-location');
+//const taskButtonLoc = document.getElementById('new-task-button-location');
 // Function to display project detailsew
 function displayProjectDetails() {
     // Add a click event listener to each <li> element
@@ -151,3 +151,113 @@ function displayProjectDetails() {
 //             <input type="date" class="due-date" value="" placeholder="Due Date"><br>Expected Hours to finish task:</input> 
 //             <!-- <input type="number" class="expected-finish" value="" placeholder="Expected Finish"><br></input>
 //             <button class="start-focus">Start Focus Session</button>--></p>
+ let collectedText = '';
+ let data = document.currentScript.dataset;
+let taskRecCheckboxChecked = false;
+let taskRecCheckbox = document.getElementById("RecTasks");
+taskRecCheckbox.addEventListener('change', () => {
+    if (taskRecCheckbox.checked)
+    {
+        taskRecCheckboxChecked = true;
+        let myList = document.getElementById('task-list');
+
+        // Initialize an empty string to store the collected text
+       
+
+        // Loop through each li element and append its text content to the string
+        myList.querySelectorAll('li').forEach(li => {
+            collectedText += li.textContent + ' ';
+        });
+    }
+    else
+    {
+        taskRecCheckboxChecked = false;
+    }
+    
+});
+ $(document).ready(function () {
+            // Send the form on enter keypress and avoid if shift is pressed 
+            // $('#prompt').keypress(function (event) {
+            //     if (event.keyCode === 13 && !event.shiftKey) {
+            //         event.preventDefault();
+            //         $('form').submit();
+            //     }
+            // });
+            $('#message-to-AI').on('click', function (event) {
+                event.preventDefault();
+                // get the CSRF token from the cookie 
+                var csrftoken = Cookies.get('csrftoken');
+
+                // set the CSRF token in the AJAX headers 
+                $.ajaxSetup({
+                    headers: { 'X-CSRFToken': csrftoken }
+                });
+                // Get the prompt 
+                var prompt = $('#prompt').val();
+
+               
+
+                var dateTime = new Date();
+                var time = dateTime.toLocaleTimeString();
+                // Add the prompt to the response div 
+                $('#response').append('<p>(' + time + ') ' + prompt + '</p>');
+                 if (taskRecCheckboxChecked === true)
+                {
+                    prompt += " Break this task into subtasks and only respond with bullet list of subtask . Use the given task's description and deadline to create dated subtasks specific to the task's description shown here : " + collectedText;
+                   
+                    // let title = data.title
+                    // console.log(title)
+                    // let projectEntryID = data.projectEntry;
+                    // console.log(projectEntryID);
+                   
+                }
+                let projectEntryID = document.getElementById("project-entry-id");
+                // Clear the prompt 
+                $('#prompt').val('');
+                $.ajax({
+                    url: '/tasks_and_AI_chat/'+ projectEntryID.textContent + '/',
+                    type: 'POST',
+                    data: { prompt: prompt },
+                    dataType: 'json',
+                    success: function (data) {
+                        var responseObject = JSON.parse(data.response);
+                        responseObject = responseObject.response
+
+
+                        // Now responseObject is a JavaScript object
+                        console.log(responseObject);
+                        $('#response').append('<p>(' + time + ') ' + responseObject + '</p>');
+                    }
+                });
+            });
+            // $('#new-project-button').on('click', function (event) {
+            //     event.preventDefault();
+            //     // get the CSRF token from the cookie 
+            //     var csrftoken = Cookies.get('csrftoken');
+
+            //     // set the CSRF token in the AJAX headers 
+            //     $.ajaxSetup({
+            //         headers: { 'X-CSRFToken': csrftoken }
+            //     });
+            //     // Get the prompt 
+            //     var projectName = $('#project-name-input').val();
+
+            //     //add project to project list
+            //     $('#project-list').append('<li>' + projectName + '</li>');
+            //     //clear new project prompt
+            //     $('#project-name-input').val('');
+            // //     $.ajax({
+            // //     url: '/projects_and_tasks',  
+            // //     type: 'POST',
+            // //     data: {projectName : projectName},
+            // //     dataType: 'json',
+            // //     success: function(data) {
+            // //         $('#project-list').append('<li>' + )
+            // //     },
+            // //     error: function(error) {
+          
+            // //         console.error('Error:', error);
+            // //     }
+            // // });
+            // });
+        }); 

@@ -1,6 +1,6 @@
 from os import environ
 from django.shortcuts import redirect, render
-from django.http import JsonResponse
+from django.http import Http404, JsonResponse
 from .models import (
     dnUser,
     Subject,
@@ -12,6 +12,7 @@ from .models import (
     Badge,
     Streak,
     Reflection,
+    ProjectChatHistory,
 )
 from .serializers import UserSerializer
 from rest_framework.decorators import api_view
@@ -132,13 +133,13 @@ def get_completion(prompt):
     print(prompt)
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo-1106",
-        max_tokens=50,
+        max_tokens=500,
         temperature=0.2,
         response_format={"type": "json_object"},
         messages=[
             {
                 "role": "system",
-                "content": 'You are a helpful assistant designed to output JSON. Always name the key "response" ',
+                "content": 'You are a helpful assistant designed to output JSON. Always make one key name the key "response" and for the rest, make it the value to the key "response"  ',
             },
             {"role": "user", "content": prompt},
         ],
@@ -156,16 +157,18 @@ def query_view(request):
     # print(projects)
     # projectList = list()
     if request.method == "POST":
-        prompt = request.POST.get("prompt")
+        # prompt = request.POST.get("prompt")
         projectName = request.POST.get("project-name-input")
 
         form1 = ProjectNameForm(request.POST)
         form2 = TaskForm(request.POST)
 
-        if prompt:
-            response = get_completion(prompt)
-            return JsonResponse({"response": response})
-        elif form1.is_valid():
+        # if prompt:
+        #     response = get_completion(prompt)
+        #     return JsonResponse({"response": response})
+
+        # save project to db
+        if form1.is_valid():
             project = form1.save(commit=False)
             project.name = form1.cleaned_data["name"]
             project.user = request.user
@@ -188,37 +191,51 @@ def projects(request):
     return render(request, "projects_and_tasks.html", context)
 
 
+taskState = ""
+
+
 def tasks_and_AI_chat(request, project_id):
-    form1 = ProjectNameForm()
-    form2 = TaskCheckoffForm()
+    # global taskState
+    # form1 = ProjectNameForm()
+    # form2 = TaskCheckoffForm()
 
     projectEntry = Project.objects.get(id=project_id)
     projects = Project.objects.filter(user=request.user)
-    tasks = Task.objects.filter(user=request.user, id=project_id)
-    taskState = ""
+    tasks = Task.objects.filter(user=request.user, project=projectEntry)
+    # print(tasks)
 
     if request.method == "POST":
-        form2 = TaskCheckoffForm(request.POST)
-        if form2.is_valid():
-            # task = form2.save(commit=False)
-            # task.completion_status = form2.cleaned_data["completion_status"]
-            # task.user = request.user
-            # task.id = project_id
-            # task.save()
-            taskState = request.POST.get("taskCheckoff", False)
-            print(taskState)
-            # if taskState == 'on':
-            # set task field to true
-            # tasks = Task.objects.filter(user=request.user)
-            # return redirect(f"/tasks_and_AI_chat/{projectEntry.id}")
+        prompt = request.POST.get("prompt")
+        print(prompt)
+        projectName = request.POST.get("project-name-input")
+        if prompt:
+            response = get_completion(prompt)
+            return JsonResponse({"response": response})
+    #     form2 = TaskCheckoffForm(request.POST)
+    #     if form2.is_valid():
+    #         task = form2.save(commit=False)
+    #         task.completion_status = form2.cleaned_data["completion_status"]
+    #         task.user = request.user
+    #         task.project = projectEntry
+    #         task.id = project_id
+    #         task.save()
+    #         taskState = request.POST.get("taskCheckoff", False)
+    #         # print(taskState)
+    #         # if taskState == 'on':
+    #         # set task field to true
+    #         # tasks = Task.objects.filter(user=request.user)
+    #         return redirect(f"/tasks_and_AI_chat/{projectEntry.id}")
 
     # if request.method == "GET":
-    #     taskState = request.GET["taskCheckoff"]
-    #     print(taskState)
+    #     if form2.is_valid():
+    #         taskState = request.GET["taskCheckoff"]
+    #         print(taskState)
+
+    # print(taskState)
 
     context = {
-        "form1": form1,
-        "form2": form2,
+        # "form1": form1,
+        # "form2": form2,
         "projects": projects,
         "projectEntry": projectEntry,
         "tasks": tasks,
@@ -233,8 +250,9 @@ def create_task(request, project_id):
 
     projects = Project.objects.filter(user=request.user)
     form3 = TaskForm()
-    tasks = Task.objects.filter(user=request.user)
     projectEntry = Project.objects.get(id=project_id)
+    tasks = Task.objects.filter(user=request.user, project=projectEntry)
+    print(tasks)
     if request.method == "POST":
         form3 = TaskForm(request.POST)
         if form3.is_valid():
@@ -244,9 +262,9 @@ def create_task(request, project_id):
             task.deadline = form3.cleaned_data["deadline"]
             task.project = projectEntry
             task.user = request.user
-            task.id = project_id
             task.save()
             tasks = Task.objects.filter(user=request.user)
+
             return redirect(f"/tasks_and_AI_chat/{projectEntry.id}")
     context = {
         "form1": form1,
@@ -256,3 +274,23 @@ def create_task(request, project_id):
         "tasks": tasks,
     }
     return render(request, "create_task.html", context)
+
+
+def edit_task(request, taskID):
+    task = Task.objects.get(id=taskID)
+    projectEntry = task.project
+    if task.user != request.user:
+        raise Http404
+
+    if request.method != "POST":
+        # Initial request; pre-fill form with the current entry.
+        form3 = TaskForm(instance=task)
+    else:
+        # POST data submitted; process data.
+        form3 = TaskForm(instance=task, data=request.POST)
+        if form3.is_valid():
+            # call save now because "the entry is already associated with the correct topic" (pg.419)
+            form3.save()
+            return redirect(f"/tasks_and_AI_chat/{projectEntry.id}")
+    context = {"task": task, "form3": form3, "projectEntry": projectEntry}
+    return render(request, "edit_task.html", context)

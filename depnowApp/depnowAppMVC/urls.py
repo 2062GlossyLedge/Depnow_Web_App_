@@ -23,6 +23,7 @@ urlpatterns = [
         views.create_task,
         name="create_task",
     ),
+    path("edit_task/<int:taskID>/", views.edit_task, name="edit_task")
     # path("<int:project_id>/", views.projects_and_tasks, name='projectsIndexed')
     # path('user_profile_info/', views.user_profile_info, name='user_profile_info')
 ]

@@ -20,79 +20,79 @@
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
         crossorigin="anonymous"></script>
     <script>
-        $(document).ready(function () {
-            // Send the form on enter keypress and avoid if shift is pressed 
-            // $('#prompt').keypress(function (event) {
-            //     if (event.keyCode === 13 && !event.shiftKey) {
-            //         event.preventDefault();
-            //         $('form').submit();
-            //     }
-            // });
-            $('#message-to-AI').on('click', function (event) {
-                event.preventDefault();
-                // get the CSRF token from the cookie 
-                var csrftoken = Cookies.get('csrftoken');
+        // $(document).ready(function () {
+        //     // Send the form on enter keypress and avoid if shift is pressed 
+        //     // $('#prompt').keypress(function (event) {
+        //     //     if (event.keyCode === 13 && !event.shiftKey) {
+        //     //         event.preventDefault();
+        //     //         $('form').submit();
+        //     //     }
+        //     // });
+        //     $('#message-to-AI').on('click', function (event) {
+        //         event.preventDefault();
+        //         // get the CSRF token from the cookie 
+        //         var csrftoken = Cookies.get('csrftoken');
 
-                // set the CSRF token in the AJAX headers 
-                $.ajaxSetup({
-                    headers: { 'X-CSRFToken': csrftoken }
-                });
-                // Get the prompt 
-                var prompt = $('#prompt').val();
+        //         // set the CSRF token in the AJAX headers 
+        //         $.ajaxSetup({
+        //             headers: { 'X-CSRFToken': csrftoken }
+        //         });
+        //         // Get the prompt 
+        //         var prompt = $('#prompt').val();
 
-                var dateTime = new Date();
-                var time = dateTime.toLocaleTimeString();
-                // Add the prompt to the response div 
-                $('#response').append('<p>(' + time + ') ' + prompt + '</p>');
-                // Clear the prompt 
-                $('#prompt').val('');
-                $.ajax({
-                    url: '/projects_and_tasks',
-                    type: 'POST',
-                    data: { prompt: prompt },
-                    dataType: 'json',
-                    success: function (data) {
-                        var responseObject = JSON.parse(data.response);
-                        responseObject = responseObject.response
+        //         var dateTime = new Date();
+        //         var time = dateTime.toLocaleTimeString();
+        //         // Add the prompt to the response div 
+        //         $('#response').append('<p>(' + time + ') ' + prompt + '</p>');
+        //         // Clear the prompt 
+        //         $('#prompt').val('');
+        //         $.ajax({
+        //             url: '/projects_and_tasks',
+        //             type: 'POST',
+        //             data: { prompt: prompt },
+        //             dataType: 'json',
+        //             success: function (data) {
+        //                 var responseObject = JSON.parse(data.response);
+        //                 responseObject = responseObject.response
 
 
-                        // Now responseObject is a JavaScript object
-                        console.log(responseObject);
-                        $('#response').append('<p>(' + time + ') ' + responseObject + '</p>');
-                    }
-                });
-            });
-            // $('#new-project-button').on('click', function (event) {
-            //     event.preventDefault();
-            //     // get the CSRF token from the cookie 
-            //     var csrftoken = Cookies.get('csrftoken');
+        //                 // Now responseObject is a JavaScript object
+        //                 console.log(responseObject);
+        //                 $('#response').append('<p>(' + time + ') ' + responseObject + '</p>');
+        //             }
+        //         });
+        //     });
+        //     // $('#new-project-button').on('click', function (event) {
+        //     //     event.preventDefault();
+        //     //     // get the CSRF token from the cookie 
+        //     //     var csrftoken = Cookies.get('csrftoken');
 
-            //     // set the CSRF token in the AJAX headers 
-            //     $.ajaxSetup({
-            //         headers: { 'X-CSRFToken': csrftoken }
-            //     });
-            //     // Get the prompt 
-            //     var projectName = $('#project-name-input').val();
+        //     //     // set the CSRF token in the AJAX headers 
+        //     //     $.ajaxSetup({
+        //     //         headers: { 'X-CSRFToken': csrftoken }
+        //     //     });
+        //     //     // Get the prompt 
+        //     //     var projectName = $('#project-name-input').val();
 
-            //     //add project to project list
-            //     $('#project-list').append('<li>' + projectName + '</li>');
-            //     //clear new project prompt
-            //     $('#project-name-input').val('');
-            // //     $.ajax({
-            // //     url: '/projects_and_tasks',  
-            // //     type: 'POST',
-            // //     data: {projectName : projectName},
-            // //     dataType: 'json',
-            // //     success: function(data) {
-            // //         $('#project-list').append('<li>' + )
-            // //     },
-            // //     error: function(error) {
+        //     //     //add project to project list
+        //     //     $('#project-list').append('<li>' + projectName + '</li>');
+        //     //     //clear new project prompt
+        //     //     $('#project-name-input').val('');
+        //     // //     $.ajax({
+        //     // //     url: '/projects_and_tasks',  
+        //     // //     type: 'POST',
+        //     // //     data: {projectName : projectName},
+        //     // //     dataType: 'json',
+        //     // //     success: function(data) {
+        //     // //         $('#project-list').append('<li>' + )
+        //     // //     },
+        //     // //     error: function(error) {
           
-            // //         console.error('Error:', error);
-            // //     }
-            // // });
-            // });
-        }); 
+        //     // //         console.error('Error:', error);
+        //     // //     }
+        //     // // });
+        //     // });
+        // }); 
     </script>
     <div class="Projects-and-tasks-container">
         <div class="sidebar">

@@ -43,6 +43,13 @@ class Project(models.Model):
     # Other fields as needed
 
 
+class ProjectChatHistory(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    chatHistory = models.TextField()
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1)
+
+
 class Task(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)

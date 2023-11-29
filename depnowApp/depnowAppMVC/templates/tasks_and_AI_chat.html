@@ -26,17 +26,29 @@
                 <li>example</li>
                 {%for task in tasks%}
 
-                <form method="post" action="{% url 'tasks_and_AI_chat' projectEntry.id %}">
+                <!-- <form method="post" action="{% url 'tasks_and_AI_chat' projectEntry.id %}">
                     {% csrf_token %}
                     <li>{{form2}}
-                        <input type="submit" value="Submit">
-                        <p>{{task.title}}</p>
-                        <p>{{task.description}}</p>
-                        <p>{{task.deadline}}</p>
-                        <p>{{task.completion_status}}</p>
-                        <p>{{taskState}}</p>
-                    </li>
-                </form>
+                        <input type="submit" value="Submit"> -->
+                <li>
+
+                    <p>{{task.title}}</p>
+                    <p>{{task.description}}</p>
+                    <p>{{task.deadline}}</p>
+
+                    {%if task.completion_status == True %}
+                    <p>Completion status: Completed</p>
+                    {% else %}
+                    <p>Completion status: In progress</p>
+                    {% endif %}
+
+                    <button id="edit-task-button"><a href="{% url 'edit_task' task.id %}"> checkoff or edit
+                            task</a></button>
+                    <!-- <p>{{task.completion_status}}</p>
+                        <p>{{taskState}}</p> -->
+                </li>
+                <!-- </li>
+                </form> -->
                 {%endfor%}
             </ul>
             <!-- </form> -->
@@ -52,6 +64,7 @@
 
                 <div class="container p-3">
                     <div class="mb-3">
+                        <input type="checkbox" id="RecTasks" value="option1"> Recommend tasks to add
                         <form method="post">
                             {% csrf_token %}
                             <label for="prompt" class="form-label"><strong>Prompt: </strong></label>
@@ -72,12 +85,26 @@
         </div>
 
     </div>
-    <script data-completion_status="{{ taskState }}">
+    <!-- <script data-completion_status="{{ taskState }}">
         const data = document.currentScript.dataset;
         const completion_status = data.completion_status;
+
+        if (completion_status === "on") {
+            document.getElementById("id_taskCheckoff").setAttribute("checked", "");
+        }
+
         console.log(completion_status);
-    </script>
+    </script> -->
+
+    <div id="project-entry-id" hidden>{{projectEntry.id}}</div>
+
     {%load static%}
+    <!-- <script src="{% static 'depnowAppMVC/projects_and_tasks.js'%}"></script> -->
+
+
+    <script defer src="{%static 'depnowAppMVC/projects_and_tasks.js'%}" data-title="{{task.title}}"
+        data-description="{{task.description}}" data-deadline="{{task.deadline}}"
+        data-projectEntry="{{projectEntry.id}}"></script>
     <!-- <link rel="stylesheet" href="{% static 'depnowAppMVC/tasks_and_AI_chat.css' %}"> -->
     <!-- <script src="{% static 'depnowAppMVC/tasks_and_AI_chat.js'%}"></script> -->
 

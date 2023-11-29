@@ -1,22 +1,24 @@
- {%extends "projects_and_tasks.html" %}
+{%extends "projects_and_tasks.html" %}
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Task Management</title>
-    
-    {%load static%}
-  </head>
-  <body>
-    {% block createNewTask %}   <!-- The modal popup -->
-    <h1>Create New Task For Project ...</h1>
-    <form action="{% url 'create_task' projectEntry.id %}" method="post">
-        {% csrf_token %}
-        {{form3.as_p}}
-        <button id='new-task-button'>Create Task</button>
-    </form>
-        <!-- <div class="modal" id="modal">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Task Management</title>
+
+  {%load static%}
+</head>
+
+<body>
+  {% block createNewTask %} <!-- The modal popup -->
+  <h1>Create New Task For Project {{projectEntry.name}}</h1>
+  <form action="{% url 'create_task' projectEntry.id %}" method="post">
+    {% csrf_token %}
+    {{form3.as_p}}
+    <button id='new-task-button'>Create Task</button>
+  </form>
+  <!-- <div class="modal" id="modal">
             <div class="modal-content">
                 <span class="close" onclick="hidePopup()">&times;</span>
                    
@@ -24,11 +26,12 @@
                 
             </div>
         </div> -->
-    <!-- <link rel="stylesheet" href="{% static 'depnowAppMVC/tasks_and_AI_chat.css' %}"> -->
-    <script src="{% static 'depnowAppMVC/create_task.js'%}"></script>
+  <!-- <link rel="stylesheet" href="{% static 'depnowAppMVC/tasks_and_AI_chat.css' %}"> -->
+  <script src="{% static 'depnowAppMVC/create_task.js'%}"></script>
 
 
-    {%endblock createNewTask %}
+  {%endblock createNewTask %}
 
-  </body>
+</body>
+
 </html>

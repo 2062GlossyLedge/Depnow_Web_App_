@@ -61,7 +61,7 @@ class ProjectNameForm(forms.ModelForm):
 class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
-        fields = ["title", "description", "deadline"]
+        fields = ["title", "description", "deadline", "completion_status"]
         widgets = {
             "title": forms.TextInput(attrs={"placeholder": "Enter task name"}),
             "description": forms.Textarea(
@@ -71,10 +71,10 @@ class TaskForm(forms.ModelForm):
         }
 
 
-class TaskCheckoffForm(forms.Form):
-    taskCheckoff = forms.BooleanField(required=False)
-    # class Meta:
-    #     model = Task
-    #     fields = ["completion_status"]
-    #     labels = {"completion_status": ""}
-    #     widgets = {"completion_status": forms.CheckboxInput()}
+class TaskCheckoffForm(forms.ModelForm):
+    # taskCheckoff = forms.BooleanField(required=False)
+    class Meta:
+        model = Task
+        fields = ["completion_status"]
+        # labels = {"completion_status": ""}
+        # widgets = {"completion_status": forms.CheckboxInput()}
