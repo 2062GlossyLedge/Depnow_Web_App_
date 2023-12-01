@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    {%block createNewTask %} {%endblock createNewTask%}
     {%block Chat&AIView%}
 
     <div class="content tasks">
@@ -64,7 +65,7 @@
 
                 <div class="container p-3">
                     <div class="mb-3">
-                        <input type="checkbox" id="RecTasks" value="option1"> Recommend tasks to add
+                        <input type="checkbox" id="RecTasks" value="option1"> Recommend subtasks
                         <form method="post">
                             {% csrf_token %}
                             <label for="prompt" class="form-label"><strong>Prompt: </strong></label>
@@ -77,7 +78,13 @@
                     <br>
                     <div class="mb-3">
                         <h6>Response:</h6>
-                        <div class="container border overflow-auto h-50" id="response"></div>
+                        <div class="container border overflow-auto h-50" id="response">
+
+                            <p>{{projectChatHistory.chatHistory}}</p>
+
+                        </div>
+
+
 
                     </div>
                 </div>

@@ -133,8 +133,8 @@ def get_completion(prompt):
     print(prompt)
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo-1106",
-        max_tokens=500,
-        temperature=0.2,
+        max_tokens=1500,
+        temperature=0.5,
         response_format={"type": "json_object"},
         messages=[
             {
@@ -173,6 +173,11 @@ def query_view(request):
             project.name = form1.cleaned_data["name"]
             project.user = request.user
             project.save()
+
+            projectChatHistory = ProjectChatHistory(
+                chatHistory="", user=request.user, project=project
+            )
+            projectChatHistory.save()
             return redirect("projects_and_tasks")
             # elif form2.is_valid():
             #     task = form2.save(commit=False)
@@ -198,19 +203,55 @@ def tasks_and_AI_chat(request, project_id):
     # global taskState
     # form1 = ProjectNameForm()
     # form2 = TaskCheckoffForm()
+    try:
+        projectEntry = Project.objects.get(id=project_id)
+    except Project.DoesNotExist:
+        return render(request, "tasks_and_AI_chat.html", context)
 
-    projectEntry = Project.objects.get(id=project_id)
     projects = Project.objects.filter(user=request.user)
     tasks = Task.objects.filter(user=request.user, project=projectEntry)
     # print(tasks)
-
     if request.method == "POST":
         prompt = request.POST.get("prompt")
-        print(prompt)
+        # print(prompt)
         projectName = request.POST.get("project-name-input")
         if prompt:
+            projectChatHistory = ProjectChatHistory.objects.get(project=projectEntry)
             response = get_completion(prompt)
+            responseObj = json.loads(response)
+            responseObj = responseObj["response"]
+            # response = responseObj.response
+            # print(responseObj["response"])
+            for subResponse in range(len(responseObj)):
+                projectChatHistory.chatHistory += "\n" + "-" + responseObj[subResponse]
+            # print(projectChatHistory.chatHistory)
+            # print("-" + str(responseObj[response]))
+
+            # responseObj = json.loads(projectChatHistory)
+            # print("Chat history: " + projectChatHistory.chatHistory)
+            projectChatHistory.save()
+            # projectChatHistory.chatHistory = response
+            # projectChatHistory.user = request.user
+            # projectChatHistory.save()
+
             return JsonResponse({"response": response})
+
+    if request.method == "GET":
+        projectChatHistory = ProjectChatHistory.objects.get(project=projectEntry)
+
+    context = {
+        # "form1": form1,
+        # "form2": form2,
+        "projects": projects,
+        "projectEntry": projectEntry,
+        "tasks": tasks,
+        "taskState": taskState,
+        "projectChatHistory": projectChatHistory,
+        # "responseObj": responseObj
+        # "taskCheckoff": taskCheckoff,
+    }
+    return render(request, "tasks_and_AI_chat.html", context)
+
     #     form2 = TaskCheckoffForm(request.POST)
     #     if form2.is_valid():
     #         task = form2.save(commit=False)
@@ -232,17 +273,6 @@ def tasks_and_AI_chat(request, project_id):
     #         print(taskState)
 
     # print(taskState)
-
-    context = {
-        # "form1": form1,
-        # "form2": form2,
-        "projects": projects,
-        "projectEntry": projectEntry,
-        "tasks": tasks,
-        "taskState": taskState
-        # "taskCheckoff": taskCheckoff,
-    }
-    return render(request, "tasks_and_AI_chat.html", context)
 
 
 def create_task(request, project_id):
@@ -266,12 +296,17 @@ def create_task(request, project_id):
             tasks = Task.objects.filter(user=request.user)
 
             return redirect(f"/tasks_and_AI_chat/{projectEntry.id}")
+
+    if request.method == "GET":
+        projectChatHistory = ProjectChatHistory.objects.get(project=projectEntry)
+
     context = {
         "form1": form1,
         "form3": form3,
         "projects": projects,
         "projectEntry": projectEntry,
         "tasks": tasks,
+        "projectChatHistory": projectChatHistory,
     }
     return render(request, "create_task.html", context)
 

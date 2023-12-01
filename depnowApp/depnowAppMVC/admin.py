@@ -10,6 +10,7 @@ from .models import (
     Badge,
     Streak,
     Reflection,
+    ProjectChatHistory,
 )
 
 # Register your models here.
@@ -23,3 +24,4 @@ admin.site.register(Tally)
 admin.site.register(Badge)
 admin.site.register(Streak)
 admin.site.register(Reflection)
+admin.site.register(ProjectChatHistory)

@@ -168,6 +168,8 @@ taskRecCheckbox.addEventListener('change', () => {
         myList.querySelectorAll('li').forEach(li => {
             collectedText += li.textContent + ' ';
         });
+
+        document.getElementById("prompt").setAttribute("placeholder", "Enter your task, then press submit");
     }
     else
     {
@@ -200,10 +202,10 @@ taskRecCheckbox.addEventListener('change', () => {
                 var dateTime = new Date();
                 var time = dateTime.toLocaleTimeString();
                 // Add the prompt to the response div 
-                $('#response').append('<p>(' + time + ') ' + prompt + '</p>');
+                $('#response').append('<p> > ' + prompt + '</p>');
                  if (taskRecCheckboxChecked === true)
                 {
-                    prompt += " Break this task into subtasks and only respond with bullet list of subtask . Use the given task's description and deadline to create dated subtasks specific to the task's description shown here : " + collectedText;
+                    prompt += " Break this task into subtasks and only respond with bullet list of subtask . Include task's description shown here to make specific subtasks  : " + collectedText;
                    
                     // let title = data.title
                     // console.log(title)
@@ -226,7 +228,7 @@ taskRecCheckbox.addEventListener('change', () => {
 
                         // Now responseObject is a JavaScript object
                         console.log(responseObject);
-                        $('#response').append('<p>(' + time + ') ' + responseObject + '</p>');
+                        $('#response').append('<p> - ' + responseObject + '</p>');
                     }
                 });
             });

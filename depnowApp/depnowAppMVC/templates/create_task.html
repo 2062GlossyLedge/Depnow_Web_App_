@@ -1,4 +1,4 @@
-{%extends "projects_and_tasks.html" %}
+{%extends "tasks_and_AI_chat.html" %}
 <!doctype html>
 <html lang="en">
 
@@ -11,13 +11,16 @@
 </head>
 
 <body>
-  {% block createNewTask %} <!-- The modal popup -->
+  {%block createNewTask %}
   <h1>Create New Task For Project {{projectEntry.name}}</h1>
   <form action="{% url 'create_task' projectEntry.id %}" method="post">
     {% csrf_token %}
     {{form3.as_p}}
     <button id='new-task-button'>Create Task</button>
   </form>
+
+
+
   <!-- <div class="modal" id="modal">
             <div class="modal-content">
                 <span class="close" onclick="hidePopup()">&times;</span>
@@ -30,8 +33,7 @@
   <script src="{% static 'depnowAppMVC/create_task.js'%}"></script>
 
 
-  {%endblock createNewTask %}
-
+  {%endblock createNewTask%}
 </body>
 
 </html>

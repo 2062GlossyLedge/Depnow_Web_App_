@@ -117,13 +117,15 @@
 
         </div>
          <div class="content tasks">
+            {% block createNewTask %}
+            
+            {%endblock createNewTask %}
+            
             {%block Chat&AIView %}
 
             {%endblock Chat&AIView%}
 
-            {% block createNewTask %}
-
-            {%endblock createNewTask %}
+           
            <!-- <div class="project-details">
                 <h1 id="project-title"></h1>
 
