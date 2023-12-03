@@ -105,9 +105,6 @@
             </form>
            
             <ul class="project-list" id="project-list">
-                <li data-project="Project 1">Project 1</li>
-                <li data-project="Project 2">Project 2</li>
-                <li data-project="Project 3">Project 3</li>
                 {% for project in projects%}
                 <li> <a href="{% url 'tasks_and_AI_chat' project.id %}"> {{project.name}}</a></li>
                 {% endfor %}
@@ -120,7 +117,7 @@
             {% block createNewTask %}
             
             {%endblock createNewTask %}
-            
+
             {%block Chat&AIView %}
 
             {%endblock Chat&AIView%}

@@ -154,6 +154,11 @@ function displayProjectDetails() {
  let collectedText = '';
  let data = document.currentScript.dataset;
 let taskRecCheckboxChecked = false;
+let recExpTimeCheckboxChecked = false;
+let easyFirstCheckboxChecked = false;
+let hardFirstCheckboxChecked = false;
+let bbCheckboxChecked = false;
+let spCheckboxChecked = false;
 let taskRecCheckbox = document.getElementById("RecTasks");
 taskRecCheckbox.addEventListener('change', () => {
     if (taskRecCheckbox.checked)
@@ -170,13 +175,140 @@ taskRecCheckbox.addEventListener('change', () => {
         });
 
         document.getElementById("prompt").setAttribute("placeholder", "Enter your task, then press submit");
+
+        // first sub checkoff box
+        let recExpTimeCheckbox = document.createElement("input");
+        recExpTimeCheckbox.setAttribute("type", "checkbox");
+        recExpTimeCheckbox.setAttribute("id", "rec-exp-time");
+
+        let recExpTimeLabel = document.createElement("label");
+        recExpTimeLabel.setAttribute("for", "rec-exp-time");
+        let recExpTimeCheckboxName = document.createTextNode("include recommended time to complete each subtask ");
+        recExpTimeLabel.appendChild(recExpTimeCheckboxName);
+
+        document.getElementById("AI-checkboxes").appendChild(recExpTimeCheckbox);
+        document.getElementById("AI-checkboxes").appendChild(recExpTimeLabel);
+        document.getElementById("AI-checkboxes").appendChild(document.createElement("br"));
+        recExpTimeCheckbox.addEventListener('change', () => {
+            if(recExpTimeCheckbox.checked)
+            {
+                 document.getElementById("prompt").setAttribute("placeholder", "Enter the task and how much time you have to complete the task, then press submit");
+                recExpTimeCheckboxChecked = true;
+            }
+            else{
+                 recExpTimeCheckboxChecked = false;
+            }
+        })
+
+         //second sub checkoff box 
+         let easyFirstCheckbox = document.createElement("input");
+        easyFirstCheckbox.setAttribute("type", "checkbox");
+        easyFirstCheckbox.setAttribute("id", "easy-first");
+
+        let easyFirstLabel = document.createElement("label");
+        easyFirstLabel.setAttribute("for", "easy-first");
+        let easyFirstCheckboxName = document.createTextNode("Recommend easy tasks first ");
+        easyFirstLabel.appendChild(easyFirstCheckboxName);
+
+        document.getElementById("AI-checkboxes").appendChild(easyFirstCheckbox);
+        document.getElementById("AI-checkboxes").appendChild(easyFirstLabel);
+        document.getElementById("AI-checkboxes").appendChild(document.createElement("br"));
+
+        easyFirstCheckbox.addEventListener('change', () => {
+            if(easyFirstCheckbox.checked)
+            {
+                easyFirstCheckboxChecked = true;
+            }
+            else{
+                easyFirstCheckboxChecked = false;
+            }
+        })
+
+         //third sub checkoff box 
+         let hardFirstCheckbox = document.createElement("input");
+        hardFirstCheckbox.setAttribute("type", "checkbox");
+        hardFirstCheckbox.setAttribute("id", "hard-first");
+
+        let hardFirstLabel = document.createElement("label");
+        hardFirstLabel.setAttribute("for", "hard-first");
+        let hardFirstCheckboxName = document.createTextNode("Recommend hard tasks first");
+        hardFirstLabel.appendChild(hardFirstCheckboxName);
+
+        document.getElementById("AI-checkboxes").appendChild(hardFirstCheckbox);
+        document.getElementById("AI-checkboxes").appendChild(hardFirstLabel);
+        document.getElementById("AI-checkboxes").appendChild(document.createElement("br"));
+
+        hardFirstCheckbox.addEventListener('change', () => {
+            if(hardFirstCheckbox.checked)
+            {
+                hardFirstCheckboxChecked = true;
+            }
+            else{
+                hardFirstCheckboxChecked = false;
+            }
+        })
+
+         //fourth sub checkoff box 
+         let bbCheckbox = document.createElement("input");
+        bbCheckbox.setAttribute("type", "checkbox");
+        bbCheckbox.setAttribute("id", "bb");
+
+        let bbLabel = document.createElement("label");
+        bbLabel.setAttribute("for", "bb");
+        let bbCheckboxName = document.createTextNode("Recommend unspecific subtasks ");
+        bbLabel.appendChild(bbCheckboxName);
+
+        document.getElementById("AI-checkboxes").appendChild(bbCheckbox);
+        document.getElementById("AI-checkboxes").appendChild(bbLabel);
+        document.getElementById("AI-checkboxes").appendChild(document.createElement("br"));
+
+        bbCheckbox.addEventListener('change', () => {
+            if(bbCheckbox.checked)
+            {
+                bbCheckboxChecked = true;
+            }
+            else{
+                bbCheckboxChecked = false;
+            }
+            });
+
+             //fifth sub checkoff box 
+         let spCheckbox = document.createElement("input");
+        spCheckbox.setAttribute("type", "checkbox");
+        spCheckbox.setAttribute("id", "sp");
+
+        let spLabel = document.createElement("label");
+        spLabel.setAttribute("for", "sp");
+        let spCheckboxName = document.createTextNode("Recommend specific subtasks");
+        spLabel.appendChild(spCheckboxName);
+
+        document.getElementById("AI-checkboxes").appendChild(spCheckbox);
+        document.getElementById("AI-checkboxes").appendChild(spLabel);
+        document.getElementById("AI-checkboxes").appendChild(document.createElement("br"));
+
+        spCheckbox.addEventListener('change', () => {
+            if(spCheckbox.checked)
+            {
+                spCheckboxChecked = true;
+            }
+            else{
+                spCheckboxChecked = false;
+            }
+        })
+
+       
+
+
     }
+
     else
     {
         taskRecCheckboxChecked = false;
     }
+     }); 
     
-});
+
+
  $(document).ready(function () {
             // Send the form on enter keypress and avoid if shift is pressed 
             // $('#prompt').keypress(function (event) {
@@ -205,13 +337,33 @@ taskRecCheckbox.addEventListener('change', () => {
                 $('#response').append('<p> > ' + prompt + '</p>');
                  if (taskRecCheckboxChecked === true)
                 {
-                    prompt += " Break this task into subtasks and only respond with bullet list of subtask . Include task's description shown here to make specific subtasks  : " + collectedText;
+                    prompt += ". Break this task into subtasks and only respond with bullet list of subtask . Include task's description shown here to make specific subtasks  : " + collectedText;
                    
                     // let title = data.title
                     // console.log(title)
                     // let projectEntryID = data.projectEntry;
                     // console.log(projectEntryID);
                    
+                }
+                if (recExpTimeCheckboxChecked === true)
+                {
+                    prompt +=". Include the recommened amount of time to complete each subtask given the amount of time available."
+                }
+               if(easyFirstCheckboxChecked === true)
+                {
+                    prompt +=". Create the easiest subtasks first. "
+                }
+                if(hardFirstCheckboxChecked === true)
+                {
+                    prompt += ". Create the hardest subtasks first"
+                }
+                if(bbCheckboxChecked === true)
+                {
+                    prompt += ". Make every subtask unspecific "
+                }
+                else if(spCheckboxChecked === true)
+                {
+                    prompt += ". Make every subtask specific"
                 }
                 let projectEntryID = document.getElementById("project-entry-id");
                 // Clear the prompt 
@@ -232,34 +384,6 @@ taskRecCheckbox.addEventListener('change', () => {
                     }
                 });
             });
-            // $('#new-project-button').on('click', function (event) {
-            //     event.preventDefault();
-            //     // get the CSRF token from the cookie 
-            //     var csrftoken = Cookies.get('csrftoken');
-
-            //     // set the CSRF token in the AJAX headers 
-            //     $.ajaxSetup({
-            //         headers: { 'X-CSRFToken': csrftoken }
-            //     });
-            //     // Get the prompt 
-            //     var projectName = $('#project-name-input').val();
-
-            //     //add project to project list
-            //     $('#project-list').append('<li>' + projectName + '</li>');
-            //     //clear new project prompt
-            //     $('#project-name-input').val('');
-            // //     $.ajax({
-            // //     url: '/projects_and_tasks',  
-            // //     type: 'POST',
-            // //     data: {projectName : projectName},
-            // //     dataType: 'json',
-            // //     success: function(data) {
-            // //         $('#project-list').append('<li>' + )
-            // //     },
-            // //     error: function(error) {
-          
-            // //         console.error('Error:', error);
-            // //     }
-            // // });
-            // });
+            
         }); 
+    

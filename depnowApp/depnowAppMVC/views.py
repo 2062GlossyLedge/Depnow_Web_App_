@@ -134,7 +134,7 @@ def get_completion(prompt):
     completion = client.chat.completions.create(
         model="gpt-3.5-turbo-1106",
         max_tokens=1500,
-        temperature=0.5,
+        temperature=0.8,
         response_format={"type": "json_object"},
         messages=[
             {
@@ -222,8 +222,16 @@ def tasks_and_AI_chat(request, project_id):
             responseObj = responseObj["response"]
             # response = responseObj.response
             # print(responseObj["response"])
-            for subResponse in range(len(responseObj)):
-                projectChatHistory.chatHistory += "\n" + "-" + responseObj[subResponse]
+            if isinstance(responseObj, list):
+                for subResponse in range(len(responseObj)):
+                    projectChatHistory.chatHistory += (
+                        "\n" + responseObj[subResponse] + "."
+                    )
+            elif isinstance(responseObj, str):
+                projectChatHistory.chatHistory += responseObj
+            elif isinstance(responseObj, dict):
+                for key, value in responseObj:
+                    projectChatHistory.chatHistory += value
             # print(projectChatHistory.chatHistory)
             # print("-" + str(responseObj[response]))
 

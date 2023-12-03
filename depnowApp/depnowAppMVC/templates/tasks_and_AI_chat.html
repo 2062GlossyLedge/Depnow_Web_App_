@@ -24,7 +24,7 @@
 
             <!-- <form method="post" action="{% url 'projects_and_tasks' %}"> -->
             <ul id="task-list">
-                <li>example</li>
+
                 {%for task in tasks%}
 
                 <!-- <form method="post" action="{% url 'tasks_and_AI_chat' projectEntry.id %}">
@@ -65,7 +65,13 @@
 
                 <div class="container p-3">
                     <div class="mb-3">
+
+
                         <input type="checkbox" id="RecTasks" value="option1"> Recommend subtasks
+                        <ul id="AI-checkboxes">
+
+                        </ul>
+
                         <form method="post">
                             {% csrf_token %}
                             <label for="prompt" class="form-label"><strong>Prompt: </strong></label>
