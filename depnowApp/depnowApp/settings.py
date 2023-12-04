@@ -180,3 +180,4 @@ MEDIA_URL = "/media/"
 
 # if "https://depnowwebapp.azurewebsites.net/" in os.environ:  # Running on Azure
 #     from .azure import *
+# redeploy
