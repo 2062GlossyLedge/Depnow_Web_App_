@@ -26,13 +26,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-ALLOWED_HOSTS = ["https://depnowwebapp.azurewebsites.net/"]
-CSRF_TRUSTED_ORIGINS = ["https://depnowwebapp.azurewebsites.net/"]
+ALLOWED_HOSTS = ["*", "https://depnowwebapp.azurewebsites.net"]
+CSRF_TRUSTED_ORIGINS = ["https://depnowwebapp.azurewebsites.net"]
 
-SECRET_KEY = os.getenv("SECRET_KEY")
+SECRET_KEY = "0ec1a6f379cdb49bceb0250923043a7e62a6b2cee9145d1d8be02a3fdbfc1055"
+# os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -95,31 +96,31 @@ WSGI_APPLICATION = "depnowApp.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
-#     # 'default': {
-#     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-#     #     'NAME': env("DB_NAME"),
-#     #     'USER': env("DB_USER"),
-#     #     'PASSWORD': env("DB_PASSWORD"),
-#     #     'HOST': env("DB_HOST"),
-#     #     'PORT': env("DB_PORT"),
-#     # }
-# }
-
-hostname = os.environ["DBHOST"]
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ["DBNAME"],
-        "HOST": hostname + ".postgres.database.azure.com",
-        "USER": os.environ["DBUSER"],
-        "PASSWORD": os.environ["DBPASS"],
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
     }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': env("DB_NAME"),
+    #     'USER': env("DB_USER"),
+    #     'PASSWORD': env("DB_PASSWORD"),
+    #     'HOST': env("DB_HOST"),
+    #     'PORT': env("DB_PORT"),
+    # }
 }
+
+# hostname = os.environ["DBHOST"]
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": os.environ["DBNAME"],
+#         "HOST": hostname + ".postgres.database.azure.com",
+#         "USER": os.environ["DBUSER"],
+#         "PASSWORD": os.environ["DBPASS"],
+#     }
+# }
 
 
 # Password validation
