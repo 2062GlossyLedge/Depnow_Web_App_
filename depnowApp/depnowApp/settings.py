@@ -26,6 +26,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
+ALLOWED_HOSTS = ["https://depnowwebapp.azurewebsites.net/"]
+CSRF_TRUSTED_ORIGINS = ["https://depnowwebapp.azurewebsites.net/"]
+
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -112,7 +115,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.environ["DBNAME"],
-        "HOST": hostname + ".postgres.database.azure.com",
+        "HOST": "https://depnowwebapp.azurewebsites.net/",
         "USER": os.environ["DBUSER"],
         "PASSWORD": os.environ["DBPASS"],
     }
@@ -175,5 +178,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # Specify the base URL for serving media files
 MEDIA_URL = "/media/"
 
-if "WEBSITE_HOSTNAME" in os.environ:  # Running on Azure
-    from .azure import *
+# if "https://depnowwebapp.azurewebsites.net/" in os.environ:  # Running on Azure
+#     from .azure import *

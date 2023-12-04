@@ -1,0 +1,2 @@
+whitenoise
+psycopg2-binary

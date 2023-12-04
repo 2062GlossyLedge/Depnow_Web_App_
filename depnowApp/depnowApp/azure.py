@@ -2,10 +2,12 @@ from .settings import *
 import os
 
 ALLOWED_HOSTS = (
-    [os.environ["WEBSITE_HOSTNAME"]] if "WEBSITE_HOSTNAME" in os.environ else []
+    ["https://depnowwebapp.azurewebsites.net/"]
+    if "https://depnowwebapp.azurewebsites.net/" in os.environ
+    else []
 )
 CSRF_TRUSTED_ORIGINS = (
-    ["https://" + os.environ["WEBSITE_HOSTNAME"]]
-    if "WEBSITE_HOSTNAME" in os.environ
+    ["https://depnowwebapp.azurewebsites.net/"]
+    if "https://depnowwebapp.azurewebsites.net/" in os.environ
     else []
 )
