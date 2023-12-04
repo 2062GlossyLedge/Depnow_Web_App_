@@ -115,7 +115,7 @@ DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": os.environ["DBNAME"],
-        "HOST": "https://depnowwebapp.azurewebsites.net/",
+        "HOST": hostname + ".postgres.database.azure.com",
         "USER": os.environ["DBUSER"],
         "PASSWORD": os.environ["DBPASS"],
     }
