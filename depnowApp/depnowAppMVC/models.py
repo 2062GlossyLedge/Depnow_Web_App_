@@ -1,51 +1,66 @@
 from django.db import models
-#Efrom django.contrib.auth.models import User #authentication system
+
+from django.contrib.auth.models import User  # authentication system
 
 
-
-class User(models.Model):
+class dnUser(models.Model):
     id = models.AutoField(primary_key=True)
     username = models.CharField(max_length=50)
     email = models.EmailField(max_length=100)
     password = models.CharField(max_length=128)  # Hashed password
     settings = models.JSONField(default=dict)  # Store user settings as JSON data
     # Other fields as needed
-     #established a relationship between user and and model using a foreign key, 
-    #such that the user's topics would be deleted if the user was deleted
+    # established a relationship between user and and model using a foreign key,
+    # such that the user's topics would be deleted if the user was deleted
 
-user1 = User(id=1, username='JerryTaylor13', email='JerryTaylor13@gmail.com', password='f49fidaf#')
-user1.save()
+
+# user1 = User(id=1, username='JerryTaylor13', email='JerryTaylor13@gmail.com', password='f49fidaf#')
+# user1.save()
+
 
 class Subject(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    #owner = models.ForeignKey(User, on_delete=models.CASCADE)
+    # owner = models.ForeignKey(User, on_delete=models.CASCADE)
     # Other fields as needed
+
 
 class UserSubject(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    primary_key = models.ForeignKey(User, related_name='user_subjects', on_delete=models.CASCADE)
+    primary_key = models.ForeignKey(
+        User, related_name="user_subjects", on_delete=models.CASCADE
+    )
     # Other fields as needed
+
 
 class Project(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
-    description = models.TextField()
-    subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    # description = models.TextField()
+    # subject = models.ForeignKey(Subject, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # Other fields as needed
+
+
+class ProjectChatHistory(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    chatHistory = models.TextField()
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1)
+
 
 class Task(models.Model):
     id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=200)
     description = models.TextField()
     deadline = models.DateTimeField(null=True, blank=True)
-    focus_hours = models.FloatField(default=0.0)
+    # focus_hours = models.FloatField(default=0.0)
     completion_status = models.BooleanField(default=False)
-    project = models.ForeignKey(Project, on_delete=models.CASCADE,default=1)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, default=1)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # Other fields as needed
+
 
 class FocusSession(models.Model):
     id = models.AutoField(primary_key=True)
@@ -58,6 +73,7 @@ class FocusSession(models.Model):
     #     """Return a string representation of the model."""
     #     return str(self.start_time)
 
+
 class Tally(models.Model):
     id = models.AutoField(primary_key=True)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -67,13 +83,17 @@ class Tally(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # Other fields as needed
 
+
 class Badge(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100)
     description = models.TextField()
-    threshold_hours = models.FloatField(default=0.0)  # Minimum hours required to earn this badge
+    threshold_hours = models.FloatField(
+        default=0.0
+    )  # Minimum hours required to earn this badge
     image_url = models.URLField()
     # Other fields as needed
+
 
 class Streak(models.Model):
     id = models.AutoField(primary_key=True)
@@ -83,10 +103,10 @@ class Streak(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # Other fields as needed
 
+
 class Reflection(models.Model):
     id = models.AutoField(primary_key=True)
     entry_date = models.DateField()  # Date of the reflection entry
     productivity_rating = models.IntegerField()  # Rating for the user's productivity
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     # Other fields as needed
-

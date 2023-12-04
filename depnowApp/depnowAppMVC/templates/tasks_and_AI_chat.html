@@ -1,0 +1,128 @@
+{%extends "projects_and_tasks.html" %}
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Task Management</title>
+
+    {%load static%}
+</head>
+
+<body>
+    {%block createNewTask %} {%endblock createNewTask%}
+    {%block Chat&AIView%}
+
+    <div class="content tasks">
+        <!-- Content of the main area -->
+        <div class="project-details">
+            <h1 id="project-title">{{projectEntry.name}}</h1>
+            <button id="new-task-button"><a href="{% url 'create_task' projectEntry.id %}"> new task</a></button>
+
+
+
+            <!-- <form method="post" action="{% url 'projects_and_tasks' %}"> -->
+            <ul id="task-list">
+
+                {%for task in tasks%}
+
+                <!-- <form method="post" action="{% url 'tasks_and_AI_chat' projectEntry.id %}">
+                    {% csrf_token %}
+                    <li>{{form2}}
+                        <input type="submit" value="Submit"> -->
+                <li>
+
+                    <p>{{task.title}}</p>
+                    <p>{{task.description}}</p>
+                    <p>{{task.deadline}}</p>
+
+                    {%if task.completion_status == True %}
+                    <p>Completion status: Completed</p>
+                    {% else %}
+                    <p>Completion status: In progress</p>
+                    {% endif %}
+
+                    <button id="edit-task-button"><a href="{% url 'edit_task' task.id %}"> checkoff or edit
+                            task</a></button>
+                    <!-- <p>{{task.completion_status}}</p>
+                        <p>{{taskState}}</p> -->
+                </li>
+                <!-- </li>
+                </form> -->
+                {%endfor%}
+            </ul>
+            <!-- </form> -->
+            <div id="new-task-button-location">
+                <!-- <button id="new-task-button">New Task</button> -->
+            </div>
+        </div>
+
+        <!-- https://www.geeksforgeeks.org/how-to-implement-chatgpt-in-django/# -->
+        <h1 style="color: white; margin-top: 15px">AI Assistant</h1>
+        <div id="chatbox">
+            <div class="content AI-Assistant">
+
+                <div class="container p-3">
+                    <div class="mb-3">
+
+
+                        <input type="checkbox" id="RecTasks" value="option1"> Recommend subtasks
+                        <ul id="AI-checkboxes">
+
+                        </ul>
+
+                        <form method="post">
+                            {% csrf_token %}
+                            <label for="prompt" class="form-label"><strong>Prompt: </strong></label>
+                            <textarea class="form-control" type="textarea" id="prompt" name="prompt"
+                                rows="3"></textarea>
+                            <br>
+                            <button class="btn btn-primary" type="submit" id="message-to-AI">Submit</button>
+                        </form>
+                    </div>
+                    <br>
+                    <div class="mb-3">
+                        <h6>Response:</h6>
+                        <div class="container border overflow-auto h-50" id="response">
+
+                            <p>{{projectChatHistory.chatHistory}}</p>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- <script data-completion_status="{{ taskState }}">
+        const data = document.currentScript.dataset;
+        const completion_status = data.completion_status;
+
+        if (completion_status === "on") {
+            document.getElementById("id_taskCheckoff").setAttribute("checked", "");
+        }
+
+        console.log(completion_status);
+    </script> -->
+
+    <div id="project-entry-id" hidden>{{projectEntry.id}}</div>
+
+    {%load static%}
+    <!-- <script src="{% static 'depnowAppMVC/projects_and_tasks.js'%}"></script> -->
+
+
+    <script defer src="{%static 'depnowAppMVC/projects_and_tasks.js'%}" data-title="{{task.title}}"
+        data-description="{{task.description}}" data-deadline="{{task.deadline}}"
+        data-projectEntry="{{projectEntry.id}}"></script>
+    <!-- <link rel="stylesheet" href="{% static 'depnowAppMVC/tasks_and_AI_chat.css' %}"> -->
+    <!-- <script src="{% static 'depnowAppMVC/tasks_and_AI_chat.js'%}"></script> -->
+
+
+    {%endblock Chat&AIView%}
+</body>
+
+</html>
