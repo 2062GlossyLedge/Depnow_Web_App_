@@ -26,16 +26,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-ALLOWED_HOSTS = ["*", "https://depnowwebapp.azurewebsites.net"]
-CSRF_TRUSTED_ORIGINS = ["https://depnowwebapp.azurewebsites.net"]
+ALLOWED_HOSTS = ["*", "https://depnow.azurewebsites.net"]
+CSRF_TRUSTED_ORIGINS = ["https://depnow.azurewebsites.net"]
 
-SECRET_KEY = "0ec1a6f379cdb49bceb0250923043a7e62a6b2cee9145d1d8be02a3fdbfc1055"
-# os.getenv("SECRET_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
+
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+DEBUG = False
 
 
 # Application definition
@@ -96,31 +94,42 @@ WSGI_APPLICATION = "depnowApp.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
-    #     'NAME': env("DB_NAME"),
-    #     'USER': env("DB_USER"),
-    #     'PASSWORD': env("DB_PASSWORD"),
-    #     'HOST': env("DB_HOST"),
-    #     'PORT': env("DB_PORT"),
-    # }
-}
-
-# hostname = os.environ["DBHOST"]
 # DATABASES = {
 #     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": os.environ["DBNAME"],
-#         "HOST": hostname + ".postgres.database.azure.com",
-#         "USER": os.environ["DBUSER"],
-#         "PASSWORD": os.environ["DBPASS"],
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
 #     }
+#     # 'default': {
+#     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#     #     'NAME': env("DB_NAME"),
+#     #     'USER': env("DB_USER"),
+#     #     'PASSWORD': env("DB_PASSWORD"),
+#     #     'HOST': env("DB_HOST"),
+#     #     'PORT': env("DB_PORT"),
+#     # }
 # }
+
+# conn_str = os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING']
+# conn_str_params = {pair.split{'='}[0]: pair.split{}}
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql",
+        "NAME": os.environ.get("DBNAME"),
+        "HOST": os.environ.get("DBHOST"),
+        "USER": os.environ.get("DBUSER"),
+        "PASSWORD": os.environ.get("DBPASS"),
+    }
+}
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.environ.get("AZURE_POSTGRESQL_CONNECTIONSTRING"),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
 
 
 # Password validation
