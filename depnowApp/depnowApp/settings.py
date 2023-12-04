@@ -118,18 +118,19 @@ DATABASES = {
         "HOST": os.environ.get("DBHOST"),
         "USER": os.environ.get("DBUSER"),
         "PASSWORD": os.environ.get("DBPASS"),
+        "PORT": os.environ.get("PORT"),
     }
 }
 
-# CACHES = {
-#     "default": {
-#         "BACKEND": "django_redis.cache.RedisCache",
-#         "LOCATION": os.environ.get("AZURE_POSTGRESQL_CONNECTIONSTRING"),
-#         "OPTIONS": {
-#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
-#         },
-#     }
-# }
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.environ.get("AZURE_POSTGRESQL_CONNECTIONSTRING"),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    }
+}
 
 # redeploy
 # redeployy
