@@ -26,14 +26,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-ALLOWED_HOSTS = ["*", "https://depnow.azurewebsites.net"]
-CSRF_TRUSTED_ORIGINS = ["https://depnow.azurewebsites.net"]
+ALLOWED_HOSTS = []
+# ["*", "https://depnow.azurewebsites.net"]
+# CSRF_TRUSTED_ORIGINS = ["https://depnow.azurewebsites.net"]
 
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 # Application definition
@@ -191,6 +192,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # Specify the base URL for serving media files
 MEDIA_URL = "/media/"
 
-# if "https://depnowwebapp.azurewebsites.net/" in os.environ:  # Running on Azure
-#     from .azure import *
-# redeploy
+if "WEBSITE_HOSTNAME" in os.environ:  # Running on Azure
+    from .azure import *

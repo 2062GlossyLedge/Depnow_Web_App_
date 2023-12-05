@@ -1,13 +1,10 @@
 from .settings import *
 import os
 
+# Configure the domain name using the environment variable
+# that Azure automatically creates for us.
 ALLOWED_HOSTS = (
-    ["https://depnowwebapp.azurewebsites.net/"]
-    if "https://depnowwebapp.azurewebsites.net/" in os.environ
-    else []
+    [os.environ["WEBSITE_HOSTNAME"]] if "WEBSITE_HOSTNAME" in os.environ else []
 )
-CSRF_TRUSTED_ORIGINS = (
-    ["https://depnowwebapp.azurewebsites.net/"]
-    if "https://depnowwebapp.azurewebsites.net/" in os.environ
-    else []
-)
+
+DEBUG = False
