@@ -95,11 +95,12 @@ WSGI_APPLICATION = "depnowApp.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.sqlite3",
-#         "NAME": BASE_DIR / "db.sqlite3",
-#     }
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
+}
 #     # 'default': {
 #     #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #     #     'NAME': env("DB_NAME"),
@@ -112,26 +113,26 @@ WSGI_APPLICATION = "depnowApp.wsgi.application"
 
 # conn_str = os.environ['AZURE_POSTGRESQL_CONNECTIONSTRING']
 # conn_str_params = {pair.split{'='}[0]: pair.split{}}
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.environ.get("DBNAME"),
-        "HOST": os.environ.get("DBHOST"),
-        "USER": os.environ.get("DBUSER"),
-        "PASSWORD": os.environ.get("DBPASS"),
-        "PORT": os.environ.get("PORT"),
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": os.environ.get("DBNAME"),
+#         "HOST": os.environ.get("DBHOST"),
+#         "USER": os.environ.get("DBUSER"),
+#         "PASSWORD": os.environ.get("DBPASS"),
+#         "PORT": os.environ.get("PORT"),
+#     }
+# }
 
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": os.environ.get("AZURE_POSTGRESQL_CONNECTIONSTRING"),
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-        },
-    }
-}
+# CACHES = {
+#     "default": {
+#         "BACKEND": "django_redis.cache.RedisCache",
+#         "LOCATION": os.environ.get("AZURE_POSTGRESQL_CONNECTIONSTRING"),
+#         "OPTIONS": {
+#             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+#         },
+#     }
+# }
 
 # redeploy
 # redeployy
