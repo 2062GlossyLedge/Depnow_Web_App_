@@ -26,9 +26,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: keep the secret key used in production secret!
 
-ALLOWED_HOSTS = []
-# ["*", "https://depnow.azurewebsites.net"]
-# CSRF_TRUSTED_ORIGINS = ["https://depnow.azurewebsites.net"]
+ALLOWED_HOSTS = ["*", "https://depnow2.azurewebsites.net"]
+CSRF_TRUSTED_ORIGINS = ["https://depnow2.azurewebsites.net"]
 
 SECRET_KEY = "0ec1a6f379cdb49bceb0250923043a7e62a6b2cee9145d1d8be02a3fdbfc1055"
 # os.getenv("SECRET_KEY")
@@ -194,5 +193,5 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 # Specify the base URL for serving media files
 MEDIA_URL = "/media/"
 
-if "WEBSITE_HOSTNAME" in os.environ:  # Running on Azure
-    from .azure import *
+# if "WEBSITE_HOSTNAME" in os.environ:  # Running on Azure
+#     from .azure import *
