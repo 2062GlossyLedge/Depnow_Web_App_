@@ -2,11 +2,15 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from depnowApp import *
 
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'depnowApp.settings')
+    settings_module = (
+        "depnowApp.azure" if "WEBSITE_HOSTNAME" in os.environ else "depnowApp.settings"
+    )
+    os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings_module)
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
@@ -18,5 +22,5 @@ def main():
     execute_from_command_line(sys.argv)
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

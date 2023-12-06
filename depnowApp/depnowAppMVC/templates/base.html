@@ -1,67 +1,70 @@
-
 <html>
 
 <head>
-    {% load bootstrap5 %}
-    {% bootstrap_css %}
-    {% bootstrap_javascript %}
-    <title>Home</title>
+  {% load bootstrap5 %}
+  {% bootstrap_css %}
+  {% bootstrap_javascript %}
+  <title>Home</title>
 </head>
 
 <!-- <body>
     
 
     <h1>Welcome to the Home Page</h1> -->
-    <!-- Add your page content here -->
-    <!-- <a href="{% url 'profile' %}">Profile</a> -->
-    <!-- Add more navigation links as needed -->
+<!-- Add your page content here -->
+<!-- <a href="{% url 'profile' %}">Profile</a> -->
+<!-- Add more navigation links as needed -->
 <!-- </body>
 
 </html> -->
 
 <!-- Nav Bar -->
+
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-      <a class="navbar-brand" href="#">PSA/Depnow</a>
+      <a class="navbar-brand" href="#">Depnow</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-          
-          
-          
+
+
+
           <ul class="navbar-nav ml-auto">
             {% if user.is_authenticated %}
-              <li class="nav-item">
-                <span class="navbar-text"><b>Hello, {{ user.username }}</b></span>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'users:logged_out' %}">Log out</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'profile' %}">Profile</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'data_insights' %}">Data Insights</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'tracker' %}">Tracker</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'projects_and_tasks' %}">Projects and Tasks</a>
-              </li>
+            <li class="nav-item">
+
+              <a class="nav-link">Hello, {{ user.username }}</a>
+
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'users:logged_out' %}">Log out</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'profile' %}">Profile</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'data_insights' %}">Data Insights</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'tracker' %}">Tracker</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'projects_and_tasks' %}">Projects and Tasks</a>
+            </li>
             {% else %}
             <li class="nav-item">
               <a class="nav-link" href="{% url 'slideshow' %}">Home</a>
             </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'users:register' %}">Register</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="{% url 'users:login' %}">Log in</a></li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'users:register' %}">Register</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'users:login' %}">Log in</a>
+            </li>
             {% endif %}
           </ul>
         </ul>
@@ -69,12 +72,12 @@
     </div>
   </nav>
 
-  
-    <div>
-      {% block content %}{% endblock content %}
-    </div>
-  
-  
+
+  <div>
+    {% block content %}{% endblock content %}
+  </div>
+
+
 </body>
 
 </html>

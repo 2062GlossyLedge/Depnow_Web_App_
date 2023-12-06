@@ -337,7 +337,7 @@ taskRecCheckbox.addEventListener('change', () => {
                 $('#response').append('<p> > ' + prompt + '</p>');
                  if (taskRecCheckboxChecked === true)
                 {
-                    prompt += ". Break this task into subtasks and only respond with bullet list of subtask . Include task's description shown here to make specific subtasks  : " + collectedText;
+                    prompt += " is my task. Given that task, provide me with new subtasks to the task and only respond with bullet list of subtask . Include task's description shown here to make specific subtasks written below the task: " + collectedText;
                    
                     // let title = data.title
                     // console.log(title)
@@ -347,7 +347,7 @@ taskRecCheckbox.addEventListener('change', () => {
                 }
                 if (recExpTimeCheckboxChecked === true)
                 {
-                    prompt +=". Include the recommened amount of time to complete each subtask given the amount of time available."
+                    prompt +=". Include the recommened amount of time to complete each subtask given the amount of time I have to do the task."
                 }
                if(easyFirstCheckboxChecked === true)
                 {

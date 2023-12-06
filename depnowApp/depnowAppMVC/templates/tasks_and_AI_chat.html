@@ -85,8 +85,10 @@
                     <div class="mb-3">
                         <h6>Response:</h6>
                         <div class="container border overflow-auto h-50" id="response">
+                            {%if projectChatHistory.chatHistory %}
 
-                            <p>{{projectChatHistory.chatHistory}}</p>
+                            <p><u>Chat History:</u>{{projectChatHistory.chatHistory}}</p>
+                            {%endif %}
 
                         </div>
 
